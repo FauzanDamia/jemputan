@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Undangan Majlis Damia & Fauzan</title>
+  <meta name="title" content="Undangan Majlis Damia & Fauzan">
+  <meta name="description" content="Ahad, 22 November 2026 | The Ark Event, Lumut. Klik untuk maklumat lanjut & RSVP.">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content=https://fauzandamia-wedding.github.io/invite/>
+  <meta property="og:title" content="The Wedding of Damia & Fauzan">
+  <meta property="og:description" content="Kami dengan sukacitanya menjemput anda ke majlis kami.">
+  <meta property="og:image" content="assets/images/thumbnail.jpg">
+
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="The Wedding of Damia & Fauzan">
+  <meta property="twitter:description" content="Ahad, 22 November 2026 | The Ark Event, Lumut.">
+  <meta property="twitter:image" content="assets\images\thumbnail2.jpeg">
+  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Damia & Fauzan Wedding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #8b5e3c;
+      --accent: #b89a78;
+      --bg: #faf7f2;
+      --text: #3a3a3a;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* 1. Invitation Cover (Envelope) */
+    #invitation-cover {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #fdf0e6;
+      z-index: 2000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .cover-content {
+      text-align: center;
+    }
+
+    .cover-content h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(60px, 15vw, 100px);
+      color: var(--primary);
+      margin: 10px 0;
+    }
+
+    .cover-content p {
+      letter-spacing: 5px;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+
+    .cover-content button {
+      margin-top: 30px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      cursor: pointer;
+      letter-spacing: 2px;
+      font-family: "Poppins", sans-serif;
+      transition: 0.3s;
+    }
+
+    .cover-content button:hover {
+      background: var(--accent);
+    }
+
+    .hide-cover {
+      transform: translateY(-100%);
+    }
+
+    /* 2. Hero Section */
+    .welcome-hero {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #fcefe6 0%, #f7e6f0 100%);
+      padding: 20px;
+    }
+
+    .welcome-content h2 {
+      font-family: "Playfair Display", serif;
+      letter-spacing: 4px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--primary);
+    }
+
+    .welcome-content h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(40px, 8vw, 72px);
+      font-weight: 400;
+      margin: 10px 0;
+      line-height: 1.1;
+    }
+
+    .welcome-content .hero-date {
+      font-size: 18px;
+      letter-spacing: 2px;
+      margin: 20px 0;
+      text-transform: uppercase;
+    }
+
+    /* 3. Countdown */
+    .countdown {
+      font-size: 16px;
+      letter-spacing: 1px;
+      margin-top: 30px;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(5px);
+      color: var(--primary);
+      padding: 12px 25px;
+      border-radius: 50px;
+      display: inline-block;
+      border: 1px solid rgba(139, 94, 60, 0.2);
+    }
+
+    /* 4. Details Section */
+    .section {
+      padding: 80px 20px;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .details-card {
+      background: white;
+      border-radius: 2px;
+      padding: 60px 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+      text-align: center;
+    }
+
+    .names {
+      font-family: "Playfair Display", serif;
+      font-size: 28px;
+      color: var(--primary);
+      margin: 20px 0;
+    }
+
+    .divider {
+      width: 50px;
+      height: 1px;
+      background: var(--accent);
+      margin: 30px auto;
+      opacity: 0.5;
+    }
+
+    /* 5. Buttons & Links */
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
+      margin-top: 30px;
+    }
+
+    .rsvp-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      padding: 12px 30px;
+      text-decoration: none;
+      font-size: 14px;
+      letter-spacing: 1px;
+      transition: 0.3s;
+      width: 200px;
+    }
+
+    .rsvp-btn.outline {
+      background: transparent;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+
+    .rsvp-btn:hover {
+      background: var(--accent);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .calendar-link {
+      display: block;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--primary);
+      text-decoration: underline;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* 6. Music Control */
+    #music-control {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1500;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid var(--primary);
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      backdrop-filter: blur(5px);
+    }
+
+    /* 7. Animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1s ease-out;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .verse {
+      font-family: "Playfair Display", serif;
+      font-style: italic;
+      font-size: 16px;
+      margin-top: 50px;
+      color: #777;
+    }
+
+    .gift-toggle {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--primary);
+      padding: 10px 20px;
+      cursor: pointer;
+      font-family: "Poppins", sans-serif;
+      font-size: 13px;
+      letter-spacing: 1px;
+      transition: 0.3s;
+    }
+
+    .gift-toggle:hover {
+      background: var(--bg);
+    }
+
+    #gift-content img {
+      max-width: 100%;
+      height: auto;
+      margin: 15px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="invitation-cover">
+    <div class="cover-content">
+      <p>WALIMATUL URUS</p>
+      <h1>D & F</h1>
+      <button onclick="openInvitation()">BUKA UNDANGAN</button>
+    </div>
+  </div>
+
+  <audio id="wedding-music" loop>
+    <source src="assets\music\Canon in D - Kalimba Cover - Sam Salvador.mp3" type="audio/mp3">
+  </audio>
+  <button id="music-control" onclick="toggleMusic()">
+    <span id="music-icon">🔊</span>
+  </button>
+
+  <div class="welcome-hero">
+    <div class="welcome-content">
+      <h2>WALIMATUL URUS</h2>
+      <h1>Damia &<br>Fauzan</h1>
+      <p class="hero-date">Ahad | 22 November 2026</p>
+      <div class="countdown" id="countdown"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="details-card reveal">
+      <p style="letter-spacing: 2px; font-size: 13px;">MEMPERSILAKAN</p>
+      
+      <p><strong>Khiruddin Bin Zakaria</strong><br>
+      &<br>
+      <strong>Nazidatulsima Binti Najamudin</strong></p>
+
+      <p>Dengan penuh kesyukuran ke hadrat Ilahi, kami menjemput Tuan/Puan/Encik/Cik ke majlis perkahwinan puteri kami:</p>
+
+      <div class="names">Khalisah Damia Widad<br>+<br>Muhammad Fauzan</div>
+
+      <div class="divider"></div>
+
+      <p><strong>22 November 2026</strong><br>
+      The Ark Event, Lumut</p>
+      
+      <p><em>Dress Code: Batik (Men) & Kurung (Women)</em></p>
+
+      <div class="btn-group">
+        <div class="nav-container" style="display: flex; gap: 10px;">
+          <a class="rsvp-btn" href="https://maps.app.goo.gl/YourLink" target="_blank" style="width: 100px; font-size: 12px;">GOOGLE MAPS</a>
+          <a class="rsvp-btn" href="https://waze.com/ul?q=The%20Ark%20Event%20Lumut" target="_blank" style="width: 100px; font-size: 12px; background: #33d1ff;">WAZE</a>
+        </div>
+        
+        <a class="rsvp-btn outline" href="https://wa.me/60123456789?text=Saya%20mengesahkan%20kehadiran%20ke%20majlis%20Damia%20%26%20Fauzan" target="_blank">RSVP WHATSAPP</a>
+        
+        <a class="calendar-link" href="https://www.google.com/calendar/render?action=TEMPLATE&text=Wedding:+Damia+%26+Fauzan&dates=20261122T030000Z/20261122T080000Z&details=Majlis+Perkahwinan+Damia+dan+Fauzan+di+The+Ark+Event,+Lumut.&location=The+Ark+Event,+Lumut&sf=true&output=xml" target="_blank">
+          + Simpan Tarikh
+        </a>
+      </div>
+
+      <div class="divider"></div>
+
+      <strong>ATURCARA MAJLIS</strong><br>
+      11.00 AM — Jamuan Makan<br>
+      12.30 PM — Ketibaan Pengantin<br> 
+      4.00 PM — Bersurai
+
+      <div class="divider"></div>
+
+      <div class="gift-section">
+        <button class="gift-toggle" onclick="toggleGift()">🎁 Beri Hadiah Digital</button>
+        <div id="gift-content" style="display: none; margin-top: 20px;">
+          <p style="font-size: 13px; color: #777;">Kehadiran anda adalah hadiah terindah, namun jika ingin memberi tanda kasih, anda boleh imbas kod di bawah:</p>
+          <img src="assets\images\gift_QR.jpeg" alt="DuitNow QR" style="width: 200px; border: 1px solid #eee; padding: 10px; background: #fff;">
+          <p><strong>TouchnGo</strong><br>1234 5678 9012<br>Damia Widad</p>
+        </div>
+      </div>
+
+      <p class="verse">
+        "Dan kami jadikan kamu berpasang-pasangan"<br>
+        (Surah An-Naba' 78:8)
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // Music Controls
+    const music = document.getElementById('wedding-music');
+    const musicIcon = document.getElementById('music-icon');
+
+    function openInvitation() {
+      document.getElementById('invitation-cover').classList.add('hide-cover');
+      music.play().catch(() => console.log("Music wait for user interaction"));
+    }
+
+    function toggleMusic() {
+      if (music.paused) {
+        music.play();
+        musicIcon.innerHTML = "🔊";
+      } else {
+        music.pause();
+        musicIcon.innerHTML = "🔇";
+      }
+    }
+
+    // Countdown Logic
+    const weddingDate = new Date("2026-11-22T11:00:00").getTime();
+    setInterval(() => {
+      const now = new Date().getTime();
+      const diff = weddingDate - now;
+      if(diff <= 0){
+        document.getElementById("countdown").innerHTML = "Hari Berbahagia Telah Tiba";
+        return;
+      }
+      const days = Math.floor(diff / (1000*60*60*24));
+      const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+      const mins = Math.floor((diff % (1000*60*60)) / (1000*60));
+      const secs = Math.floor((diff % (1000*60)) / 1000);
+      document.getElementById("countdown").innerHTML = `${days}d : ${hours}h : ${mins}m : ${secs}s`;
+    }, 1000);
+
+    // Scroll Animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    function toggleGift() {
+      const content = document.getElementById('gift-content');
+      if (content.style.display === "none") {
+        content.style.display = "block";
+        content.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        content.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>
