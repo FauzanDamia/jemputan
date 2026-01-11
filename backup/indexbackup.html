@@ -23,7 +23,7 @@
       --white: rgba(255, 255, 255, 0.98);
     }
 
-    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body {
       margin: 0;
       font-family: "Poppins", sans-serif;
@@ -42,7 +42,7 @@
       z-index: 10;
     }
 
-    /* --- ENVELOPE COVER --- */
+    /* --- IMPROVED OPENING CARD (ENVELOPE) --- */
     #invitation-cover {
       position: fixed;
       top: 0;
@@ -125,7 +125,7 @@
       pointer-events: none;
     }
 
-    /* --- HERO --- */
+    /* --- HERO & CONTENT --- */
     .hero {
       height: 100vh;
       display: flex;
@@ -133,7 +133,6 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      position: relative;
       background: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)), 
                   url('https://www.transparenttextures.com/patterns/natural-paper.png');
     }
@@ -144,43 +143,6 @@
       color: var(--sage);
       margin: 0;
       font-weight: 400;
-    }
-
-    .scroll-down-hint {
-      position: absolute;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      cursor: pointer;
-      text-align: center;
-      color: var(--sage);
-      transition: 0.3s;
-      z-index: 100;
-    }
-
-    .scroll-down-hint p {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin: 0 0 10px 0;
-      opacity: 0.8;
-      line-height: 1.5;
-    }
-
-    .arrow-icon {
-      width: 20px;
-      height: 20px;
-      border-bottom: 2px solid var(--sage);
-      border-right: 2px solid var(--sage);
-      transform: rotate(45deg);
-      margin: 0 auto;
-      animation: arrowBounce 2s infinite;
-    }
-
-    @keyframes arrowBounce {
-      0%, 20%, 50%, 80%, 100% { transform: translateY(0) rotate(45deg); }
-      40% { transform: translateY(-10px) rotate(45deg); }
-      60% { transform: translateY(-5px) rotate(45deg); }
     }
 
     .date-block {
@@ -197,10 +159,9 @@
     .date-day { font-family: 'Playfair Display', serif; font-size: 55px; line-height: 1; margin: 10px 0; color: var(--dusty-rose); }
     .date-year { letter-spacing: 3px; font-weight: 300; font-size: 13px; }
 
-    /* --- CONTENT CONTAINER --- */
     .container {
       max-width: 600px;
-      margin: 0 auto 80px;
+      margin: -100px auto 80px;
       background: var(--white);
       backdrop-filter: blur(10px);
       padding: 80px 40px;
@@ -218,6 +179,7 @@
       margin-bottom: 20px;
     }
 
+    /* Venue & Map Link Grouping */
     .venue-box {
       margin: 40px 0;
       padding: 25px;
@@ -244,6 +206,7 @@
 
     .nav-item:hover { background: var(--sage); color: white; }
 
+    /* Timeline */
     .timeline { margin: 40px auto; max-width: 280px; text-align: left; }
     .timeline-item { padding-left: 30px; margin-bottom: 20px; position: relative; }
     .timeline-item::before { content: ''; position: absolute; left: 0; top: 5px; width: 8px; height: 8px; background: var(--dusty-rose); border-radius: 50%; }
@@ -252,6 +215,7 @@
     .timeline-time { font-weight: 600; font-size: 11px; color: var(--sage); display: block; }
     .timeline-text { font-size: 14px; color: #666; }
 
+    /* RSVP & Secondary */
     .btn-main {
       display: block;
       background: var(--sage);
@@ -276,7 +240,6 @@
       color: #888;
       border-radius: 4px;
       transition: 0.3s;
-      cursor: pointer;
     }
     .btn-alt:hover { border-color: var(--sage); color: var(--sage); }
 
@@ -284,6 +247,7 @@
     .time-node span { display: block; font-size: 26px; font-family: 'Playfair Display'; color: var(--sage); }
     .time-node label { font-size: 9px; text-transform: uppercase; color: #aaa; letter-spacing: 2px; }
 
+    /* Floating Music Icon */
     #music-control {
       position: fixed;
       bottom: 25px;
@@ -319,7 +283,7 @@
 
   <div id="invitation-cover">
     <div class="envelope-wrapper">
-      <h2>Jemputan Walimatulurus</h2>
+      <h2>Wedding Invitation</h2>
       <h1>Damia & Fauzan</h1>
       <p id="guest-name" style="margin: 15px 0; color: #999; font-style: italic; min-height: 20px; font-size: 14px;"></p>
       
@@ -346,29 +310,16 @@
       <div class="time-node"><span id="mins">00</span><label>Minit</label></div>
       <div class="time-node"><span id="secs">00</span><label>Saat</label></div>
     </div>
-
-    <div class="scroll-down-hint" onclick="scrollToContent()">
-      <p>Skrol ke bawah <br> untuk maklumat lanjut</p>
-      <div class="arrow-icon"></div>
-    </div>
   </section>
 
-  <div id="main-content" class="container reveal">
-    <img src="assets/images/Salam.png" alt="Assalamualaikum" 
-        style="width: 250px; max-width: 80%; margin: 0 auto 5px; display: block; 
-                filter: invert(65%) sepia(18%) saturate(833%) hue-rotate(3deg) brightness(92%) contrast(89%);">
-
-    <p style="font-family: 'Playfair Display'; font-style: italic; color: var(--gold); font-size: 18px; margin-top: 0;">& Salam Sejahtera</p>
+  <div class="container reveal">
+    <p style="font-family: 'Playfair Display'; font-style: italic; color: var(--gold); font-size: 18px;">Assalamualaikum w.b.t</p>
     
-    <p style="font-size: 14px; color: #666; margin: 30px 0;">
-      Dengan penuh kesyukuran, kami menjemput <br>
-      Dato'/Datin/Prof/Dr/Tuan/Puan/Saudara/Saudari <br>
-      ke majlis meraikan ikatan cinta puteri kami:
-    </p>
+    <p style="font-size: 14px; color: #666; margin: 30px 0;">Dengan penuh kesyukuran, kami menjemput Tuan/Puan ke majlis meraikan ikatan cinta anakanda kami:</p>
     
     <div class="names-display">
       Khalisah Damia Widad<br>
-      <span style="font-size: 14px; font-family: 'Poppins'; color: #bbb; display: block; margin: 10px 0;">dengan pilihan hatinya</span>
+      <span style="font-size: 14px; font-family: 'Poppins'; color: #bbb; display: block; margin: 10px 0;">&</span>
       Muhammad Fauzan
     </div>
 
@@ -409,11 +360,8 @@
     </div>
     
     <div id="gift-content" class="gift-card">
-      <p style="font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 20px; font-style: italic;">
-        "Kehadiran anda adalah hadiah terindah buat kami, namun jika ingin memberi lebih, kami sangat menghargai tanda kasih daripada anda."
-      </p>
       <img src="assets/images/gift_QR.jpeg" style="width: 150px; border: 5px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.05);" alt="QR">
-      <p style="font-size: 14px; margin-top: 15px;"><strong>Maybank</strong><br>1234 5678 9012<br>Khalisah Damia Widad</p>
+      <p style="font-size: 14px; margin-top: 15px;"><strong>Maybank</strong><br>1234 5678 9012<br>Damia Widad</p>
     </div>
 
     <p style="margin-top: 60px; font-family: 'Playfair Display'; font-size: 14px; color: #888; font-style: italic; line-height: 1.8;">
@@ -445,15 +393,12 @@
       initPetals();
     }
 
-    function scrollToContent() {
-      document.getElementById('main-content').scrollIntoView({ behavior: 'smooth' });
-    }
-
     function toggleMusic() {
       if (music.paused) { music.play(); viz.classList.add('playing'); } 
       else { music.pause(); viz.classList.remove('playing'); }
     }
 
+    // Animation: Falling Petals
     const canvas = document.getElementById('petals-canvas');
     const ctx = canvas.getContext('2d');
     let petalArray = [];
@@ -483,6 +428,7 @@
       requestAnimationFrame(animate);
     }
 
+    // Countdown
     const targetDate = new Date("Nov 22, 2026 11:00:00").getTime();
     setInterval(() => {
       const diff = targetDate - new Date().getTime();
