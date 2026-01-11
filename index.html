@@ -1,416 +1,452 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Undangan Majlis Damia & Fauzan</title>
-  <meta name="title" content="Undangan Majlis Damia & Fauzan">
-  <meta name="description" content="Ahad, 22 November 2026 | The Ark Event, Lumut. Klik untuk maklumat lanjut & RSVP.">
-
-  <meta property="og:type" content="website">
-  <meta property="og:url" content=https://fauzandamia-wedding.github.io/invite/>
-  <meta property="og:title" content="The Wedding of Damia & Fauzan">
-  <meta property="og:description" content="Kami dengan sukacitanya menjemput anda ke majlis kami.">
-  <meta property="og:image" content="assets/images/thumbnail.jpg">
-
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:title" content="The Wedding of Damia & Fauzan">
-  <meta property="twitter:description" content="Ahad, 22 November 2026 | The Ark Event, Lumut.">
-  <meta property="twitter:image" content="assets\images\thumbnail2.jpeg">
-  
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Damia & Fauzan Wedding</title>
+  
+  <title>The Wedding of Damia & Fauzan</title>
+  
+  <meta property="og:title" content="Undangan Majlis Damia & Fauzan">
+  <meta property="og:description" content="Ahad, 22 November 2026 | The Ark Event, Lumut.">
+  <meta property="og:image" content="https://fauzandamia.github.io/jemputan/assets/images/thumbnail.jpg">
+  
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet" />
+  
   <style>
     :root {
-      --primary: #8b5e3c;
-      --accent: #b89a78;
-      --bg: #faf7f2;
-      --text: #3a3a3a;
+      --sage: #7a8d80;
+      --dusty-rose: #d4a3a3;
+      --cream: #fdfaf5;
+      --dark: #2d3436;
+      --gold: #b39359;
+      --white: rgba(255, 255, 255, 0.98);
     }
 
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body {
       margin: 0;
       font-family: "Poppins", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
+      background-color: var(--cream);
+      color: var(--dark);
       overflow-x: hidden;
     }
 
-    /* 1. Invitation Cover (Envelope) */
+    #petals-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* --- IMPROVED OPENING CARD (ENVELOPE) --- */
     #invitation-cover {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: #fdf0e6;
-      z-index: 2000;
+      background: var(--cream);
+      z-index: 3000;
       display: flex;
       justify-content: center;
       align-items: center;
-      transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+      transition: transform 1.2s cubic-bezier(0.7, 0, 0.3, 1), opacity 1s;
     }
 
-    .cover-content {
+    .envelope-wrapper {
       text-align: center;
+      padding: 40px 20px;
+      max-width: 400px;
+      width: 90%;
+      background: white;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+      border-radius: 10px;
+      border: 1px solid #f0f0f0;
+      animation: breathe 4s infinite ease-in-out;
+      position: relative;
     }
 
-    .cover-content h1 {
-      font-family: "Playfair Display", serif;
-      font-size: clamp(60px, 15vw, 100px);
-      color: var(--primary);
-      margin: 10px 0;
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
     }
 
-    .cover-content p {
+    .envelope-wrapper h2 {
+      font-size: 10px;
       letter-spacing: 5px;
-      font-size: 14px;
+      color: var(--sage);
       text-transform: uppercase;
+      margin-bottom: 20px;
     }
 
-    .cover-content button {
+    .envelope-wrapper h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(45px, 10vw, 65px);
+      color: var(--dusty-rose);
+      margin: 0;
+    }
+
+    .seal-container {
       margin-top: 30px;
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 15px 40px;
       cursor: pointer;
-      letter-spacing: 2px;
-      font-family: "Poppins", sans-serif;
-      transition: 0.3s;
+      position: relative;
+      display: inline-block;
     }
 
-    .cover-content button:hover {
-      background: var(--accent);
+    .seal-circle {
+      width: 80px;
+      height: 80px;
+      background: var(--sage);
+      border: 3px double white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      box-shadow: 0 0 0 5px rgba(122, 141, 128, 0.1);
+      transition: 0.5s;
+    }
+
+    .seal-container:hover .seal-circle {
+      background: var(--gold);
+      transform: rotate(15deg);
     }
 
     .hide-cover {
       transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
     }
 
-    /* 2. Hero Section */
-    .welcome-hero {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
+    /* --- HERO & CONTENT --- */
+    .hero {
       height: 100vh;
-      background: linear-gradient(135deg, #fcefe6 0%, #f7e6f0 100%);
-      padding: 20px;
-    }
-
-    .welcome-content h2 {
-      font-family: "Playfair Display", serif;
-      letter-spacing: 4px;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 20px;
-      color: var(--primary);
-    }
-
-    .welcome-content h1 {
-      font-family: "Playfair Display", serif;
-      font-size: clamp(40px, 8vw, 72px);
-      font-weight: 400;
-      margin: 10px 0;
-      line-height: 1.1;
-    }
-
-    .welcome-content .hero-date {
-      font-size: 18px;
-      letter-spacing: 2px;
-      margin: 20px 0;
-      text-transform: uppercase;
-    }
-
-    /* 3. Countdown */
-    .countdown {
-      font-size: 16px;
-      letter-spacing: 1px;
-      margin-top: 30px;
-      background: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(5px);
-      color: var(--primary);
-      padding: 12px 25px;
-      border-radius: 50px;
-      display: inline-block;
-      border: 1px solid rgba(139, 94, 60, 0.2);
-    }
-
-    /* 4. Details Section */
-    .section {
-      padding: 80px 20px;
-      max-width: 700px;
-      margin: auto;
-    }
-
-    .details-card {
-      background: white;
-      border-radius: 2px;
-      padding: 60px 40px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-      text-align: center;
-    }
-
-    .names {
-      font-family: "Playfair Display", serif;
-      font-size: 28px;
-      color: var(--primary);
-      margin: 20px 0;
-    }
-
-    .divider {
-      width: 50px;
-      height: 1px;
-      background: var(--accent);
-      margin: 30px auto;
-      opacity: 0.5;
-    }
-
-    /* 5. Buttons & Links */
-    .btn-group {
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      justify-content: center;
       align-items: center;
-      margin-top: 30px;
+      text-align: center;
+      background: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)), 
+                  url('https://www.transparenttextures.com/patterns/natural-paper.png');
     }
 
-    .rsvp-btn {
-      display: inline-block;
-      background: var(--primary);
-      color: white;
-      padding: 12px 30px;
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(40px, 10vw, 85px);
+      color: var(--sage);
+      margin: 0;
+      font-weight: 400;
+    }
+
+    .date-block {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 40px 0;
+      padding: 20px;
+      border: 1px solid rgba(122, 141, 128, 0.2);
+      background: var(--white);
+    }
+
+    .date-month { text-transform: uppercase; letter-spacing: 5px; font-size: 13px; color: var(--sage); }
+    .date-day { font-family: 'Playfair Display', serif; font-size: 55px; line-height: 1; margin: 10px 0; color: var(--dusty-rose); }
+    .date-year { letter-spacing: 3px; font-weight: 300; font-size: 13px; }
+
+    .container {
+      max-width: 600px;
+      margin: -100px auto 80px;
+      background: var(--white);
+      backdrop-filter: blur(10px);
+      padding: 80px 40px;
+      position: relative;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.03);
+      text-align: center;
+      z-index: 20;
+      border-radius: 5px;
+    }
+
+    .names-display {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(26px, 6vw, 36px);
+      color: var(--sage);
+      margin-bottom: 20px;
+    }
+
+    /* Venue & Map Link Grouping */
+    .venue-box {
+      margin: 40px 0;
+      padding: 25px;
+      background: #fafafa;
+      border-radius: 10px;
+    }
+
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .nav-item {
       text-decoration: none;
-      font-size: 14px;
-      letter-spacing: 1px;
+      font-size: 12px;
+      color: var(--sage);
+      border: 1px solid var(--sage);
+      padding: 8px 18px;
+      border-radius: 20px;
       transition: 0.3s;
-      width: 200px;
     }
 
-    .rsvp-btn.outline {
-      background: transparent;
-      color: var(--primary);
-      border: 1px solid var(--primary);
-    }
+    .nav-item:hover { background: var(--sage); color: white; }
 
-    .rsvp-btn:hover {
-      background: var(--accent);
-      color: white;
-      transform: translateY(-2px);
-    }
+    /* Timeline */
+    .timeline { margin: 40px auto; max-width: 280px; text-align: left; }
+    .timeline-item { padding-left: 30px; margin-bottom: 20px; position: relative; }
+    .timeline-item::before { content: ''; position: absolute; left: 0; top: 5px; width: 8px; height: 8px; background: var(--dusty-rose); border-radius: 50%; }
+    .timeline-item::after { content: ''; position: absolute; left: 3px; top: 18px; width: 1px; height: 25px; background: #eee; }
+    .timeline-item:last-child::after { display: none; }
+    .timeline-time { font-weight: 600; font-size: 11px; color: var(--sage); display: block; }
+    .timeline-text { font-size: 14px; color: #666; }
 
-    .calendar-link {
+    /* RSVP & Secondary */
+    .btn-main {
       display: block;
-      margin-top: 10px;
-      font-size: 11px;
-      color: var(--primary);
-      text-decoration: underline;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      background: var(--sage);
+      color: white;
+      text-decoration: none;
+      padding: 18px;
+      font-size: 13px;
+      letter-spacing: 2px;
+      font-weight: 600;
+      margin: 40px 0 20px;
+      border-radius: 4px;
+      transition: 0.3s;
     }
+    .btn-main:hover { background: var(--gold); }
 
-    /* 6. Music Control */
+    .btn-group-half { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .btn-alt {
+      text-decoration: none;
+      padding: 12px;
+      font-size: 11px;
+      border: 1px solid #ddd;
+      color: #888;
+      border-radius: 4px;
+      transition: 0.3s;
+    }
+    .btn-alt:hover { border-color: var(--sage); color: var(--sage); }
+
+    #timer { display: flex; justify-content: center; gap: 20px; margin: 30px 0; }
+    .time-node span { display: block; font-size: 26px; font-family: 'Playfair Display'; color: var(--sage); }
+    .time-node label { font-size: 9px; text-transform: uppercase; color: #aaa; letter-spacing: 2px; }
+
+    /* Floating Music Icon */
     #music-control {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 1500;
-      background: rgba(255, 255, 255, 0.8);
-      border: 1px solid var(--primary);
-      border-radius: 50%;
+      bottom: 25px;
+      right: 25px;
       width: 45px;
       height: 45px;
+      background: white;
+      border-radius: 50%;
+      border: 1px solid #eee;
       display: flex;
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      backdrop-filter: blur(5px);
+      z-index: 4000;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
+    .visualizer { display: flex; align-items: flex-end; gap: 3px; height: 12px; }
+    .bar { width: 2px; background: var(--sage); border-radius: 2px; }
+    .playing .bar { animation: bounce 0.8s infinite ease-in-out; }
+    .playing .bar:nth-child(2) { animation-delay: 0.2s; }
+    .playing .bar:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce { 0%, 100% { height: 4px; } 50% { height: 12px; } }
 
-    /* 7. Animations */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 1s ease-out;
-    }
+    .reveal { opacity: 0; transform: translateY(30px); transition: 1s all ease-out; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
 
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .verse {
-      font-family: "Playfair Display", serif;
-      font-style: italic;
-      font-size: 16px;
-      margin-top: 50px;
-      color: #777;
-    }
-
-    .gift-toggle {
-      background: transparent;
-      border: 1px solid var(--accent);
-      color: var(--primary);
-      padding: 10px 20px;
-      cursor: pointer;
-      font-family: "Poppins", sans-serif;
-      font-size: 13px;
-      letter-spacing: 1px;
-      transition: 0.3s;
-    }
-
-    .gift-toggle:hover {
-      background: var(--bg);
-    }
-
-    #gift-content img {
-      max-width: 100%;
-      height: auto;
-      margin: 15px 0;
-    }
+    .gift-card { margin-top: 20px; padding: 25px; background: #fafafa; border: 1px dashed #ddd; display: none; }
   </style>
 </head>
 <body>
 
+  <canvas id="petals-canvas"></canvas>
+
   <div id="invitation-cover">
-    <div class="cover-content">
-      <p>WALIMATUL URUS</p>
-      <h1>D & F</h1>
-      <button onclick="openInvitation()">BUKA UNDANGAN</button>
+    <div class="envelope-wrapper">
+      <h2>Wedding Invitation</h2>
+      <h1>Damia & Fauzan</h1>
+      <p id="guest-name" style="margin: 15px 0; color: #999; font-style: italic; min-height: 20px; font-size: 14px;"></p>
+      
+      <div class="seal-container" onclick="openInvitation()">
+        <div class="seal-circle">BUKA</div>
+      </div>
+      <p style="font-size: 10px; color: #ccc; margin-top: 15px; letter-spacing: 1px;">KLIK UNTUK MEMBUKA</p>
     </div>
+  </div>
+
+  <section class="hero">
+    <p style="letter-spacing: 8px; color: var(--gold); font-size: 11px;">SAVE THE DATE</p>
+    <h1>Damia & Fauzan</h1>
+    
+    <div class="date-block">
+      <div class="date-month">November</div>
+      <div class="date-day">22</div>
+      <div class="date-year">2026</div>
+    </div>
+
+    <div id="timer">
+      <div class="time-node"><span id="days">00</span><label>Hari</label></div>
+      <div class="time-node"><span id="hours">00</span><label>Jam</label></div>
+      <div class="time-node"><span id="mins">00</span><label>Minit</label></div>
+      <div class="time-node"><span id="secs">00</span><label>Saat</label></div>
+    </div>
+  </section>
+
+  <div class="container reveal">
+    <p style="font-family: 'Playfair Display'; font-style: italic; color: var(--gold); font-size: 18px;">Assalamualaikum w.b.t</p>
+    
+    <p style="font-size: 14px; color: #666; margin: 30px 0;">Dengan penuh kesyukuran, kami menjemput Tuan/Puan ke majlis meraikan ikatan cinta anakanda kami:</p>
+    
+    <div class="names-display">
+      Khalisah Damia Widad<br>
+      <span style="font-size: 14px; font-family: 'Poppins'; color: #bbb; display: block; margin: 10px 0;">&</span>
+      Muhammad Fauzan
+    </div>
+
+    <div class="divider" style="height: 1px; width: 60px; background: var(--gold); margin: 30px auto;"></div>
+
+    <div class="venue-box">
+      <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 11px; font-weight: 600; color: var(--sage); margin-bottom: 5px;">Lokasi Majlis</p>
+      <p style="font-size: 18px; margin: 0; color: var(--dark);"><strong>The Ark Event</strong></p>
+      <p style="font-size: 14px; color: #777; margin-bottom: 20px;">Lumut, Perak</p>
+      
+      <div class="nav-links">
+        <a href="http://googleusercontent.com/maps.google.com/99" class="nav-item" target="_blank">Google Maps</a>
+        <a href="https://waze.com/ul?q=The%20Ark%20Event%20Lumut" class="nav-item" target="_blank">Waze</a>
+      </div>
+    </div>
+
+    <div style="text-transform: uppercase; letter-spacing: 2px; font-size: 11px; font-weight: 600; color: var(--sage); margin-top: 40px;">Aturcara Majlis</div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <span class="timeline-time">11:00 AM</span>
+        <span class="timeline-text">Jamuan Makan Bermula</span>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-time">12:30 PM</span>
+        <span class="timeline-text">Ketibaan Pasangan Pengantin</span>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-time">04:00 PM</span>
+        <span class="timeline-text">Majlis Bersurai</span>
+      </div>
+    </div>
+
+    <a href="https://wa.me/60123456789?text=Terima%20kasih%20atas%20jemputan.%20Saya%20(Nama%20Anda)%20sekeluarga%20ingin%20mengesahkan%20kehadiran%20ke%20majlis%20Damia%20%26%20Fauzan.%20Jumlah%20tetamu:%20(Jumlah)%20orang." class="btn-main">PENGESAHAN KEHADIRAN (RSVP)</a>
+
+    <div class="btn-group-half">
+      <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Wedding+Damia+%26+Fauzan&dates=20261122T030000Z/20261122T080000Z&location=The+Ark+Event,+Lumut" class="btn-alt" target="_blank">🗓️ Simpan Tarikh</a>
+      <a href="javascript:void(0)" class="btn-alt" onclick="toggleGift()">🎁 Salam Kaut</a>
+    </div>
+    
+    <div id="gift-content" class="gift-card">
+      <img src="assets/images/gift_QR.jpeg" style="width: 150px; border: 5px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.05);" alt="QR">
+      <p style="font-size: 14px; margin-top: 15px;"><strong>Maybank</strong><br>1234 5678 9012<br>Damia Widad</p>
+    </div>
+
+    <p style="margin-top: 60px; font-family: 'Playfair Display'; font-size: 14px; color: #888; font-style: italic; line-height: 1.8;">
+      "Dan kami jadikan kamu berpasang-pasangan"<br>
+      (Surah An-Naba' 78:8)
+    </p>
   </div>
 
   <audio id="wedding-music" loop>
-    <source src="assets\music\Canon in D - Kalimba Cover - Sam Salvador.mp3" type="audio/mp3">
+    <source src="assets/music/Canon in D - Kalimba Cover - Sam Salvador.mp3" type="audio/mp3">
   </audio>
-  <button id="music-control" onclick="toggleMusic()">
-    <span id="music-icon">🔊</span>
-  </button>
-
-  <div class="welcome-hero">
-    <div class="welcome-content">
-      <h2>WALIMATUL URUS</h2>
-      <h1>Damia &<br>Fauzan</h1>
-      <p class="hero-date">Ahad | 22 November 2026</p>
-      <div class="countdown" id="countdown"></div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="details-card reveal">
-      <p style="letter-spacing: 2px; font-size: 13px;">MEMPERSILAKAN</p>
-      
-      <p><strong>Khiruddin Bin Zakaria</strong><br>
-      &<br>
-      <strong>Nazidatulsima Binti Najamudin</strong></p>
-
-      <p>Dengan penuh kesyukuran ke hadrat Ilahi, kami menjemput Tuan/Puan/Encik/Cik ke majlis perkahwinan puteri kami:</p>
-
-      <div class="names">Khalisah Damia Widad<br>+<br>Muhammad Fauzan</div>
-
-      <div class="divider"></div>
-
-      <p><strong>22 November 2026</strong><br>
-      The Ark Event, Lumut</p>
-      
-      <p><em>Dress Code: Batik (Men) & Kurung (Women)</em></p>
-
-      <div class="btn-group">
-        <div class="nav-container" style="display: flex; gap: 10px;">
-          <a class="rsvp-btn" href="https://maps.app.goo.gl/YourLink" target="_blank" style="width: 100px; font-size: 12px;">GOOGLE MAPS</a>
-          <a class="rsvp-btn" href="https://waze.com/ul?q=The%20Ark%20Event%20Lumut" target="_blank" style="width: 100px; font-size: 12px; background: #33d1ff;">WAZE</a>
-        </div>
-        
-        <a class="rsvp-btn outline" href="https://wa.me/60123456789?text=Saya%20mengesahkan%20kehadiran%20ke%20majlis%20Damia%20%26%20Fauzan" target="_blank">RSVP WHATSAPP</a>
-        
-        <a class="calendar-link" href="https://www.google.com/calendar/render?action=TEMPLATE&text=Wedding:+Damia+%26+Fauzan&dates=20261122T030000Z/20261122T080000Z&details=Majlis+Perkahwinan+Damia+dan+Fauzan+di+The+Ark+Event,+Lumut.&location=The+Ark+Event,+Lumut&sf=true&output=xml" target="_blank">
-          + Simpan Tarikh
-        </a>
-      </div>
-
-      <div class="divider"></div>
-
-      <strong>ATURCARA MAJLIS</strong><br>
-      11.00 AM — Jamuan Makan<br>
-      12.30 PM — Ketibaan Pengantin<br> 
-      4.00 PM — Bersurai
-
-      <div class="divider"></div>
-
-      <div class="gift-section">
-        <button class="gift-toggle" onclick="toggleGift()">🎁 Beri Hadiah Digital</button>
-        <div id="gift-content" style="display: none; margin-top: 20px;">
-          <p style="font-size: 13px; color: #777;">Kehadiran anda adalah hadiah terindah, namun jika ingin memberi tanda kasih, anda boleh imbas kod di bawah:</p>
-          <img src="assets\images\gift_QR.jpeg" alt="DuitNow QR" style="width: 200px; border: 1px solid #eee; padding: 10px; background: #fff;">
-          <p><strong>TouchnGo</strong><br>1234 5678 9012<br>Damia Widad</p>
-        </div>
-      </div>
-
-      <p class="verse">
-        "Dan kami jadikan kamu berpasang-pasangan"<br>
-        (Surah An-Naba' 78:8)
-      </p>
+  <div id="music-control" onclick="toggleMusic()">
+    <div class="visualizer" id="viz">
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div>
     </div>
   </div>
 
   <script>
-    // Music Controls
+    const urlParams = new URLSearchParams(window.location.search);
+    const guest = urlParams.get('to');
+    if (guest) document.getElementById('guest-name').innerText = `Istimewa buat: ${guest}`;
+
     const music = document.getElementById('wedding-music');
-    const musicIcon = document.getElementById('music-icon');
+    const viz = document.getElementById('viz');
 
     function openInvitation() {
       document.getElementById('invitation-cover').classList.add('hide-cover');
-      music.play().catch(() => console.log("Music wait for user interaction"));
+      music.play().then(() => viz.classList.add('playing')).catch(e => console.log("Music blocked"));
+      initPetals();
     }
 
     function toggleMusic() {
-      if (music.paused) {
-        music.play();
-        musicIcon.innerHTML = "🔊";
-      } else {
-        music.pause();
-        musicIcon.innerHTML = "🔇";
-      }
+      if (music.paused) { music.play(); viz.classList.add('playing'); } 
+      else { music.pause(); viz.classList.remove('playing'); }
     }
 
-    // Countdown Logic
-    const weddingDate = new Date("2026-11-22T11:00:00").getTime();
-    setInterval(() => {
-      const now = new Date().getTime();
-      const diff = weddingDate - now;
-      if(diff <= 0){
-        document.getElementById("countdown").innerHTML = "Hari Berbahagia Telah Tiba";
-        return;
+    // Animation: Falling Petals
+    const canvas = document.getElementById('petals-canvas');
+    const ctx = canvas.getContext('2d');
+    let petalArray = [];
+
+    function initPetals() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      for (let i = 0; i < 25; i++) {
+        petalArray.push({
+          x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+          size: Math.random() * 4 + 2, speed: Math.random() * 0.8 + 0.5,
+          swing: Math.random() * 2, opacity: Math.random() * 0.4 + 0.2
+        });
       }
-      const days = Math.floor(diff / (1000*60*60*24));
-      const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-      const mins = Math.floor((diff % (1000*60*60)) / (1000*60));
-      const secs = Math.floor((diff % (1000*60)) / 1000);
-      document.getElementById("countdown").innerHTML = `${days}d : ${hours}h : ${mins}m : ${secs}s`;
+      animate();
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "rgba(212, 163, 163, 1)";
+      petalArray.forEach(p => {
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.globalAlpha = p.opacity; ctx.fill();
+        p.y += p.speed; p.x += Math.sin(p.swing);
+        if (p.y > canvas.height) p.y = -10;
+      });
+      requestAnimationFrame(animate);
+    }
+
+    // Countdown
+    const targetDate = new Date("Nov 22, 2026 11:00:00").getTime();
+    setInterval(() => {
+      const diff = targetDate - new Date().getTime();
+      document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+      document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      document.getElementById('mins').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      document.getElementById('secs').innerText = Math.floor((diff % (1000 * 60)) / 1000);
     }, 1000);
 
-    // Scroll Animation
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-        }
-      });
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
     }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
     function toggleGift() {
-      const content = document.getElementById('gift-content');
-      if (content.style.display === "none") {
-        content.style.display = "block";
-        content.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        content.style.display = "none";
-      }
+      const g = document.getElementById('gift-content');
+      g.style.display = (g.style.display === 'block') ? 'none' : 'block';
+      if(g.style.display === 'block') g.scrollIntoView({ behavior: 'smooth' });
     }
   </script>
 </body>
