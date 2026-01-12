@@ -159,7 +159,7 @@
       top: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 200%;
+      width: 170%;
       max-width: 900px;
       z-index: 1000;
       pointer-events: none;
@@ -220,13 +220,17 @@
       z-index: 100;
     }
 
-    .scroll-down-hint p {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin: 0 0 10px 0;
-      opacity: 0.8;
-      line-height: 1.5;
+    /* Find this section in your CSS */
+    .scroll-down-hint {
+      position: absolute;
+      bottom: 80px; /* Increase this from 30px to 80px or 100px */
+      left: 50%;
+      transform: translateX(-50%);
+      cursor: pointer;
+      text-align: center;
+      color: var(--sage);
+      transition: 0.3s;
+      z-index: 100;
     }
 
     .arrow-icon {
