@@ -153,17 +153,18 @@
 
     /* --- HERO --- */
 
-    /* Fixed Flower Arrangement */
+    /* Update these in your <style> block */
     .flower-header {
       position: fixed;
       top: 0;
       left: 50%;
       transform: translateX(-50%);
       width: 100%;
-      max-width: 1000px; /* Adjust based on your image width */
-      z-index: 1000; /* Higher than hero, lower than cover */
-      pointer-events: none; /* Allows clicking through to buttons */
-      transition: filter 0.5s ease;
+      max-width: 600px;
+      z-index: 1000;
+      pointer-events: none;
+      /* Remove the 0.5s transition to allow for real-time scroll tracking */
+      transition: none; 
     }
 
     /* Glassy Container Adjustments */
@@ -379,7 +380,7 @@
 <body>
 
   <canvas id="petals-canvas"></canvas>
-  <img src="assets\images\top_flower2.png" id="top-flowers" class="flower-header" alt="Flower Decor">
+  <img src="assets\images\top_flower.png" id="top-flowers" class="flower-header" alt="Flower Decor">
   <canvas id="petals-canvas"></canvas>
 
   <div id="invitation-cover">
@@ -570,14 +571,20 @@
     window.onscroll = function() {
       const flower = document.getElementById('top-flowers');
       const scrollPosition = window.scrollY;
-      const heroHeight = document.querySelector('.hero').offsetHeight;
+      
+      // Settings: 
+      // Max blur of 10px reached when user scrolls 400px down
+      const maxBlur = 10; 
+      const scrollThreshold = 400; 
 
-      // If user scrolls past 50% of the Hero height, start blurring
-      if (scrollPosition > heroHeight * 0.5) {
-        flower.classList.add('flower-blur');
-      } else {
-        flower.classList.remove('flower-blur');
-      }
+      // Calculate blur: Starts at 0, increases to maxBlur
+      let currentBlur = (scrollPosition / scrollThreshold) * maxBlur;
+      
+      // Cap the blur so it doesn't get too messy
+      if (currentBlur > maxBlur) currentBlur = maxBlur;
+
+      // Apply the dynamic filter
+      flower.style.filter = `blur(${currentBlur}px) opacity(${1 - (currentBlur/25)})`;
     };
   </script>
 </body>
