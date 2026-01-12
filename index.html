@@ -42,7 +42,7 @@
       z-index: 10;
     }
 
-    /* --- ENVELOPE COVER --- */
+    /* --- ENHANCED LETTER OPENING (ENVELOPE) --- */
     #invitation-cover {
       position: fixed;
       top: 0;
@@ -59,64 +59,90 @@
 
     .envelope-wrapper {
       text-align: center;
-      padding: 40px 20px;
-      max-width: 400px;
+      padding: 60px 20px 40px;
+      max-width: 380px;
       width: 90%;
-      background: white;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.05);
-      border-radius: 10px;
-      border: 1px solid #f0f0f0;
-      animation: breathe 4s infinite ease-in-out;
+      background: #fff;
+      background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+      box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+      border-radius: 4px;
       position: relative;
+      border: 1px solid #f0e6d2;
     }
 
-    @keyframes breathe {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.02); }
+    /* The Envelope Flap Effect */
+    .envelope-wrapper::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100px;
+      background: #fdfaf5;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      border-bottom: 1px solid #e8dec9;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.02);
     }
 
     .envelope-wrapper h2 {
       font-size: 10px;
-      letter-spacing: 5px;
+      letter-spacing: 4px;
       color: var(--sage);
       text-transform: uppercase;
-      margin-bottom: 20px;
+      margin: 40px 0 10px;
+      font-weight: 500;
     }
 
     .envelope-wrapper h1 {
       font-family: 'Great Vibes', cursive;
-      font-size: clamp(45px, 10vw, 65px);
+      font-size: clamp(40px, 9vw, 55px);
       color: var(--dusty-rose);
       margin: 0;
     }
 
     .seal-container {
-      margin-top: 30px;
+      margin-top: 40px;
       cursor: pointer;
       position: relative;
       display: inline-block;
+      transition: transform 0.3s;
     }
 
+    .seal-container:hover { transform: scale(1.05); }
+
     .seal-circle {
-      width: 80px;
-      height: 80px;
+      width: 75px;
+      height: 75px;
       background: var(--sage);
-      border: 3px double white;
+      background-image: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2), transparent);
+      border: 1px solid rgba(0,0,0,0.1);
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
       color: white;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
-      letter-spacing: 1px;
-      box-shadow: 0 0 0 5px rgba(122, 141, 128, 0.1);
-      transition: 0.5s;
+      letter-spacing: 2px;
+      box-shadow: 0 10px 20px rgba(122, 141, 128, 0.3), inset 0 0 15px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 2;
     }
 
-    .seal-container:hover .seal-circle {
-      background: var(--gold);
-      transform: rotate(15deg);
+    /* Wax seal ripple effect */
+    .seal-container::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      border-radius: 50%;
+      border: 2px solid var(--sage);
+      opacity: 0.5;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.5; }
+      100% { transform: scale(1.4); opacity: 0; }
     }
 
     .hide-cover {
@@ -126,6 +152,41 @@
     }
 
     /* --- HERO --- */
+
+    /* Fixed Flower Arrangement */
+    .flower-header {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 1000px; /* Adjust based on your image width */
+      z-index: 1000; /* Higher than hero, lower than cover */
+      pointer-events: none; /* Allows clicking through to buttons */
+      transition: filter 0.5s ease;
+    }
+
+    /* Glassy Container Adjustments */
+    .container {
+      max-width: 600px;
+      margin: 0 auto 80px;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      padding: 80px 40px;
+      position: relative;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.03);
+      text-align: center;
+      z-index: 20;
+      border-radius: 0 0 15px 15px; /* Rounded only at bottom */
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    /* Class to trigger blur via JavaScript */
+    .flower-blur {
+      filter: blur(8px) opacity(0.6);
+    }
+
     .hero {
       height: 100vh;
       display: flex;
@@ -197,18 +258,20 @@
     .date-day { font-family: 'Playfair Display', serif; font-size: 55px; line-height: 1; margin: 10px 0; color: var(--dusty-rose); }
     .date-year { letter-spacing: 3px; font-weight: 300; font-size: 13px; }
 
-    /* --- CONTENT CONTAINER --- */
+    /* --- CONTAINER --- */
     .container {
       max-width: 600px;
-      margin: 0 auto 80px;
-      background: var(--white);
-      backdrop-filter: blur(10px);
-      padding: 80px 40px;
+      margin: -50px auto 80px; /* Reduced top margin to sit closer to the flowers */
+      background: rgba(255, 255, 255, 0.7); /* More transparent */
+      backdrop-filter: blur(15px); /* Stronger frosted effect */
+      -webkit-backdrop-filter: blur(15px);
+      padding: 60px 30px;
       position: relative;
-      box-shadow: 0 30px 70px rgba(0,0,0,0.03);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07); /* Softer shadow */
       text-align: center;
       z-index: 20;
-      border-radius: 5px;
+      border-radius: 15px; /* Softer corners */
+      border: 1px solid rgba(255, 255, 255, 0.4); /* Glass edge highlight */
     }
 
     .names-display {
@@ -316,17 +379,19 @@
 <body>
 
   <canvas id="petals-canvas"></canvas>
+  <img src="assets\images\top_flower2.png" id="top-flowers" class="flower-header" alt="Flower Decor">
+  <canvas id="petals-canvas"></canvas>
 
   <div id="invitation-cover">
     <div class="envelope-wrapper">
       <h2>Jemputan Walimatulurus</h2>
-      <h1>Damia & Fauzan</h1>
+      <h1>D & F</h1>
       <p id="guest-name" style="margin: 15px 0; color: #999; font-style: italic; min-height: 20px; font-size: 14px;"></p>
       
       <div class="seal-container" onclick="openInvitation()">
         <div class="seal-circle">BUKA</div>
       </div>
-      <p style="font-size: 10px; color: #ccc; margin-top: 15px; letter-spacing: 1px;">KLIK UNTUK MEMBUKA</p>
+      <p style="font-size: 10px; color: #bbb; margin-top: 15px; letter-spacing: 1.5px; font-weight: 500;">KLIK UNTUK MEMBUKA</p>
     </div>
   </div>
 
@@ -348,16 +413,15 @@
     </div>
 
     <div class="scroll-down-hint" onclick="scrollToContent()">
-      <p>Skrol ke bawah <br> untuk maklumat lanjut</p>
+      <!-- <p>Skrol ke bawah <br> untuk maklumat lanjut</p> -->
       <div class="arrow-icon"></div>
     </div>
   </section>
 
   <div id="main-content" class="container reveal">
-    <img src="assets/images/Salam.png" alt="Assalamualaikum" 
-        style="width: 250px; max-width: 80%; margin: 0 auto 5px; display: block; 
-                filter: invert(65%) sepia(18%) saturate(833%) hue-rotate(3deg) brightness(92%) contrast(89%);">
-
+    
+    <img src="assets/images/Salam.png" alt="Assalamualaikum" style="width: 250px; max-width: 80%; margin: 0 auto 5px; display: block; filter: invert(65%) sepia(18%) saturate(833%) hue-rotate(3deg) brightness(92%) contrast(89%);">
+    
     <p style="font-family: 'Playfair Display'; font-style: italic; color: var(--gold); font-size: 18px; margin-top: 0;">& Salam Sejahtera</p>
     
     <p style="font-size: 14px; color: #666; margin: 30px 0;">
@@ -502,6 +566,19 @@
       g.style.display = (g.style.display === 'block') ? 'none' : 'block';
       if(g.style.display === 'block') g.scrollIntoView({ behavior: 'smooth' });
     }
+
+    window.onscroll = function() {
+      const flower = document.getElementById('top-flowers');
+      const scrollPosition = window.scrollY;
+      const heroHeight = document.querySelector('.hero').offsetHeight;
+
+      // If user scrolls past 50% of the Hero height, start blurring
+      if (scrollPosition > heroHeight * 0.5) {
+        flower.classList.add('flower-blur');
+      } else {
+        flower.classList.remove('flower-blur');
+      }
+    };
   </script>
 </body>
 </html>
