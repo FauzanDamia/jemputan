@@ -147,7 +147,7 @@
       top: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 180%;
+      width: 150%;
       max-width: 800px;
       z-index: 1000;
       pointer-events: none;
@@ -285,6 +285,13 @@
       border-radius: 4px;
       transition: 0.3s;
       box-shadow: 0 4px 15px rgba(122, 141, 128, 0.2);
+      animation: btnPulse 2s infinite ease-in-out;
+    }
+
+    @keyframes btnPulse {
+        0% { transform: scale(1); box-shadow: 0 4px 15px rgba(122, 141, 128, 0.2); }
+        50% { transform: scale(1.02); box-shadow: 0 8px 25px rgba(122, 141, 128, 0.4); }
+        100% { transform: scale(1); box-shadow: 0 4px 15px rgba(122, 141, 128, 0.2); }
     }
 
     .btn-group-half { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -296,6 +303,26 @@
       color: #777;
       border-radius: 4px;
       transition: 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .info-card { 
+      margin-top: 20px; 
+      padding: 25px; 
+      background: #fafafa; 
+      border: 1px dashed #ddd; 
+      display: none; 
+      border-radius: 8px;
+    }
+
+    .color-circle {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.1);
+      display: inline-block;
     }
 
     .organizer-contact {
@@ -335,8 +362,6 @@
 
     .reveal { opacity: 0; transform: translateY(30px); transition: 1s all ease-out; }
     .reveal.active { opacity: 1; transform: translateY(0); }
-
-    .gift-card { margin-top: 20px; padding: 25px; background: #fafafa; border: 1px dashed #ddd; display: none; }
   </style>
 </head>
 <body>
@@ -398,9 +423,9 @@
     </p>
     
     <div class="names-display">
-      Khalisah Damia Widad<br>
+      Khalisah Damia Widad binti Khiruddin<br>
       <span style="font-size: 14px; font-family: 'Poppins'; color: #bbb; display: block; margin: 10px 0;">dengan pilihan hatinya</span>
-      Muhammad Fauzan
+      Muhammad Fauzan bin Muhammad Azahar
     </div>
 
     <div class="divider" style="height: 1px; width: 60px; background: var(--gold); margin: 30px auto;"></div>
@@ -411,9 +436,9 @@
       <p style="font-size: 16px; margin: 5px 0; color: var(--dark);">Ritz Garden Hotel</p>
       <p style="font-size: 14px; color: #777; margin-bottom: 20px;">Seri Manjung, Perak</p>
       
-      <div class="nav-links">
-        <a href="https://maps.app.goo.gl/9uT5VvA6k8vR9z2p7" class="nav-item" target="_blank">Google Maps</a>
-        <a href="https://www.waze.com/en/live-map/directions/hotel-ritz-garden-manjung-jalan-iskandar-shah-5260-seri-manjung?latlng=4.198657847700111%2C100.65893769264221" class="nav-item" target="_blank">Waze</a>
+      <div class="nav-links" style="flex-wrap: wrap;">
+        <a href="https://maps.app.goo.gl/E7MVQC3pZnoHWCN9A" class="nav-item" target="_blank">Google Maps</a>
+        <a href="https://www.waze.com/en/live-map/directions/hotel-ritz-garden-manjung-jalan-iskandar-shah-5260-seri-manjung?latlng=4.1986596525591455%2C100.65893769264221" class="nav-item" target="_blank">Waze</a>
       </div>
     </div>
 
@@ -437,20 +462,31 @@
 
     <div class="btn-group-half">
       <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Wedding+Damia+%26+Fauzan&dates=20260822T030000Z/20260822T080000Z&location=Grand+Ballroom,+Ritz+Garden+Hotel,+Seri+Manjung&details=Majlis+Walimatulurus+Damia+dan+Fauzan" class="btn-alt" target="_blank">🗓️ Simpan Tarikh</a>
-      <a href="javascript:void(0)" class="btn-alt" onclick="toggleGift()">🎁 Hadiah Kasih</a>
+      <a href="javascript:void(0)" class="btn-alt" onclick="toggleInfo()">👗 Tema Pakaian</a>
     </div>
     
-    <div id="gift-content" class="gift-card">
-      <p style="font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 20px; font-style: italic;">
-        "Kehadiran anda adalah hadiah terindah buat kami, namun jika ingin memberi lebih, kami sangat menghargai tanda kasih daripada anda."
+    <div id="info-content" class="info-card">
+      <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 11px; font-weight: 600; color: var(--sage); margin-bottom: 15px;">Tema Pakaian</p>
+      <p style="font-size: 14px; color: #666; margin-bottom: 15px;">
+        Bagi menyerikan lagi majlis, para tetamu digalakkan memakai pakaian bertemakan warna:
       </p>
-      <img src="assets/images/gift_QR.jpeg" style="width: 150px; border: 5px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.05);" alt="QR">
-      <p style="font-size: 14px; margin-top: 15px;"><strong>Maybank</strong><br>1234 5678 9012<br>Khalisah Damia Widad</p>
+      
+      <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 20px;">
+        <div class="color-circle" style="background: #E5E4E2;" title="Silver"></div>
+        <div class="color-circle" style="background: #7a8d80;" title="Sage Green"></div>
+        <div class="color-circle" style="background: #fdfaf5;" title="Cream"></div>
+      </div>
+
+      <p style="font-size: 12px; color: #888; font-style: italic;">
+        *Atau sebarang pakaian yang sopan & bersesuaian.*
+      </p>
     </div>
 
     <div class="organizer-contact">
         Hubungi kami jika ada sebarang pertanyaan:<br>
-        <a href="https://wa.me/601111875246" style="color: var(--sage); text-decoration: none; font-weight: 600;">Shima dan Khiruddin</a>
+        <div style="margin-top: 10px;">
+            <a href="https://wa.me/601111875246" style="color: var(--sage); text-decoration: none; font-weight: 600; border: 1px solid #eee; padding: 5px 15px; border-radius: 20px; display: inline-block;">WhatsApp Shima & Khiruddin</a>
+        </div>
     </div>
 
     <p style="margin-top: 60px; font-family: 'Playfair Display'; font-size: 14px; color: #888; font-style: italic; line-height: 1.8;">
@@ -478,9 +514,15 @@
 
     function openInvitation() {
       document.getElementById('invitation-cover').classList.add('hide-cover');
+      
+      // Auto-unlock music
       const playPromise = music.play();
       if (playPromise !== undefined) {
-        playPromise.then(() => viz.classList.add('playing')).catch(() => console.log("Music blocked"));
+        playPromise.then(() => {
+          viz.classList.add('playing');
+        }).catch(() => {
+          console.log("Autoplay blocked. User must interact with visualizer.");
+        });
       }
       initPetals();
     }
@@ -490,10 +532,22 @@
     }
 
     function toggleMusic() {
-      if (music.paused) { music.play(); viz.classList.add('playing'); } 
-      else { music.pause(); viz.classList.remove('playing'); }
+      if (music.paused) { 
+        music.play(); 
+        viz.classList.add('playing'); 
+      } else { 
+        music.pause(); 
+        viz.classList.remove('playing'); 
+      }
     }
 
+    function toggleInfo() {
+      const g = document.getElementById('info-content');
+      g.style.display = (g.style.display === 'block') ? 'none' : 'block';
+      if(g.style.display === 'block') g.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    /* --- ENHANCED PETALS --- */
     const canvas = document.getElementById('petals-canvas');
     const ctx = canvas.getContext('2d');
     let petalArray = [];
@@ -504,9 +558,12 @@
       petalArray = [];
       for (let i = 0; i < 25; i++) {
         petalArray.push({
-          x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-          size: Math.random() * 4 + 2, speed: Math.random() * 0.8 + 0.5,
-          swing: Math.random() * 2, opacity: Math.random() * 0.4 + 0.2
+          x: Math.random() * canvas.width, 
+          y: Math.random() * canvas.height,
+          size: Math.random() * 4 + 2, 
+          speed: Math.random() * 0.8 + 0.5,
+          swing: Math.random() * 2, 
+          opacity: Math.random() * 0.3 + 0.2 // Softer opacity
         });
       }
       animate();
@@ -514,16 +571,19 @@
 
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "rgba(212, 163, 163, 1)";
       petalArray.forEach(p => {
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.globalAlpha = p.opacity; ctx.fill();
-        p.y += p.speed; p.x += Math.sin(p.swing);
+        ctx.beginPath(); 
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(212, 163, 163, ${p.opacity})`;
+        ctx.fill();
+        p.y += p.speed; 
+        p.x += Math.sin(p.swing) * 0.5;
         if (p.y > canvas.height) p.y = -10;
       });
       requestAnimationFrame(animate);
     }
 
+    /* --- TIMER --- */
     const targetDate = new Date("Aug 22, 2026 11:00:00").getTime();
     setInterval(() => {
       const now = new Date().getTime();
@@ -536,25 +596,24 @@
       }
     }, 1000);
 
+    /* --- REVEAL ANIMATION --- */
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    function toggleGift() {
-      const g = document.getElementById('gift-content');
-      g.style.display = (g.style.display === 'block') ? 'none' : 'block';
-      if(g.style.display === 'block') g.scrollIntoView({ behavior: 'smooth' });
-    }
-
+    /* --- PARALLAX BLUR --- */
     window.onscroll = function() {
       const flower = document.getElementById('top-flowers');
       const scrollPosition = window.scrollY;
-      const currentBlur = Math.min((scrollPosition / 400) * 10, 10);
+      const currentBlur = Math.min((scrollPosition / 500) * 12, 12);
       flower.style.filter = `blur(${currentBlur}px) opacity(${1 - (currentBlur/25)})`;
     };
 
-    window.onresize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+    window.onresize = () => { 
+        canvas.width = window.innerWidth; 
+        canvas.height = window.innerHeight; 
+    };
   </script>
 </body>
 </html>
