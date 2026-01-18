@@ -43,32 +43,36 @@
       z-index: 10;
     }
 
-    /* --- UPDATED RESPONSIVE SIDE BORDERS --- */
+    /* --- RESPONSIVE DECORATIONS --- */
+    .flower-header {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 900px;
+      z-index: 1000;
+      pointer-events: none;
+      transition: filter 0.3s ease, opacity 0.3s ease;
+    }
+
     .side-border {
       position: fixed;
       top: 50%;
       transform: translateY(-50%);
-      /* Uses 25% of the screen width on desktop, but caps it at 400px */
-      width: clamp(150px, 25vw, 400px); 
+      width: clamp(150px, 25vw, 450px); 
       z-index: 900;
       pointer-events: none;
-      transition: filter 0.2s ease, opacity 0.2s ease;
+      transition: filter 0.3s ease, opacity 0.3s ease;
     }
 
-    .left-border { 
-      left: -20px; /* Slight offset to tuck the edge away */
-    }
-    
-    .right-border { 
-      right: -20px; 
-    }
+    .left-border { left: -20px; }
+    .right-border { right: -20px; }
 
     /* Mobile Specific Adjustments */
     @media (max-width: 768px) {
-      .side-border { 
-        width: 35vw; /* Larger relative to screen on mobile */
-        opacity: 0.8; 
-      }
+      .flower-header { width: 150%; } 
+      .side-border { width: 35vw; }
       .left-border { left: -15px; }
       .right-border { right: -15px; }
     }
@@ -172,17 +176,6 @@
     .hide-cover { transform: translateY(-100%); opacity: 0; pointer-events: none; }
 
     /* --- HERO --- */
-    .flower-header {
-      position: fixed;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 150%;
-      max-width: 800px;
-      z-index: 1000;
-      pointer-events: none;
-    }
-
     .hero {
       height: 100vh;
       display: flex;
@@ -399,8 +392,8 @@
   <canvas id="petals-canvas"></canvas>
   
   <img src="assets/images/top_flower.png" id="top-flowers" class="flower-header" alt="Flower Top">
-  <img src="assets/images/Left Border.png" id="left-border" class="side-border left-border" alt="Flower Left">
-  <img src="assets/images/Right Border.png" id="right-border" class="side-border right-border" alt="Flower Right">
+  <img src="assets/images/left_flower.png" id="left-border" class="side-border left-border" alt="Flower Left">
+  <img src="assets/images/right_flower.png" id="right-border" class="side-border right-border" alt="Flower Right">
 
   <div id="invitation-cover">
     <div class="envelope-wrapper">
@@ -573,7 +566,7 @@
       if(g.style.display === 'block') g.scrollIntoView({ behavior: 'smooth' });
     }
 
-    /* --- ENHANCED PETALS --- */
+    /* --- PETALS --- */
     const canvas = document.getElementById('petals-canvas');
     const ctx = canvas.getContext('2d');
     let petalArray = [];
@@ -628,7 +621,7 @@
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    /* --- PARALLAX BLUR & FADE FOR ALL DECORATIONS --- */
+    /* --- UPDATED PERSISTENT PARALLAX (BLUR & TRANSPARENT ONLY) --- */
     window.onscroll = function() {
       const topFlower = document.getElementById('top-flowers');
       const leftBorder = document.getElementById('left-border');
@@ -636,16 +629,18 @@
       
       const scrollPosition = window.scrollY;
       
-      // Calculate blur (max 12px) and opacity (fades out)
-      const currentBlur = Math.min((scrollPosition / 500) * 12, 12);
-      const currentOpacity = 1 - (scrollPosition / 600);
+      // Blur increases but caps at 8px
+      const currentBlur = Math.min((scrollPosition / 500) * 8, 8);
+      
+      // Opacity decreases but stops at 0.3 (Doesn't disappear)
+      const currentOpacity = Math.max(1 - (scrollPosition / 600), 0.3);
 
       const decorations = [topFlower, leftBorder, rightBorder];
       
       decorations.forEach(el => {
         if(el) {
           el.style.filter = `blur(${currentBlur}px)`;
-          el.style.opacity = Math.max(currentOpacity, 0);
+          el.style.opacity = currentOpacity;
         }
       });
     };
