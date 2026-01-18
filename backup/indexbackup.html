@@ -7,7 +7,7 @@
   <title>The Wedding of Damia & Fauzan</title>
   
   <meta property="og:title" content="Undangan Majlis Damia & Fauzan">
-  <meta property="og:description" content="Ahad, 22 November 2026 | The Ark Event, Lumut.">
+  <meta property="og:description" content="Sabtu, 22 Ogos 2026 | Ritz Garden Hotel, Seri Manjung.">
   <meta property="og:image" content="https://fauzandamia.github.io/jemputan/assets/images/thumbnail.jpg">
   
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -23,7 +23,7 @@
       --white: rgba(255, 255, 255, 0.98);
     }
 
-    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: "Poppins", sans-serif;
@@ -42,7 +42,7 @@
       z-index: 10;
     }
 
-    /* --- IMPROVED OPENING CARD (ENVELOPE) --- */
+    /* --- ENHANCED LETTER OPENING (ENVELOPE) --- */
     #invitation-cover {
       position: fixed;
       top: 0;
@@ -59,64 +59,88 @@
 
     .envelope-wrapper {
       text-align: center;
-      padding: 40px 20px;
-      max-width: 400px;
+      padding: 60px 20px 40px;
+      max-width: 380px;
       width: 90%;
-      background: white;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.05);
-      border-radius: 10px;
-      border: 1px solid #f0f0f0;
-      animation: breathe 4s infinite ease-in-out;
+      background: #fff;
+      background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+      box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+      border-radius: 4px;
       position: relative;
+      border: 1px solid #f0e6d2;
     }
 
-    @keyframes breathe {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.02); }
+    .envelope-wrapper::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100px;
+      background: #fdfaf5;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      border-bottom: 1px solid #e8dec9;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.02);
     }
 
     .envelope-wrapper h2 {
       font-size: 10px;
-      letter-spacing: 5px;
+      letter-spacing: 4px;
       color: var(--sage);
       text-transform: uppercase;
-      margin-bottom: 20px;
+      margin: 40px 0 10px;
+      font-weight: 500;
     }
 
     .envelope-wrapper h1 {
       font-family: 'Great Vibes', cursive;
-      font-size: clamp(45px, 10vw, 65px);
+      font-size: clamp(40px, 9vw, 55px);
       color: var(--dusty-rose);
       margin: 0;
     }
 
     .seal-container {
-      margin-top: 30px;
+      margin-top: 40px;
       cursor: pointer;
       position: relative;
       display: inline-block;
+      transition: transform 0.3s;
     }
 
+    .seal-container:hover { transform: scale(1.05); }
+
     .seal-circle {
-      width: 80px;
-      height: 80px;
+      width: 75px;
+      height: 75px;
       background: var(--sage);
-      border: 3px double white;
+      background-image: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2), transparent);
+      border: 1px solid rgba(0,0,0,0.1);
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
       color: white;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
-      letter-spacing: 1px;
-      box-shadow: 0 0 0 5px rgba(122, 141, 128, 0.1);
-      transition: 0.5s;
+      letter-spacing: 2px;
+      box-shadow: 0 10px 20px rgba(122, 141, 128, 0.3), inset 0 0 15px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 2;
     }
 
-    .seal-container:hover .seal-circle {
-      background: var(--gold);
-      transform: rotate(15deg);
+    .seal-container::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      border-radius: 50%;
+      border: 2px solid var(--sage);
+      opacity: 0.5;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.5; }
+      100% { transform: scale(1.4); opacity: 0; }
     }
 
     .hide-cover {
@@ -125,7 +149,19 @@
       pointer-events: none;
     }
 
-    /* --- HERO & CONTENT --- */
+    /* --- HERO --- */
+    .flower-header {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 170%;
+      max-width: 900px;
+      z-index: 1000;
+      pointer-events: none;
+      transition: none; 
+    }
+
     .hero {
       height: 100vh;
       display: flex;
@@ -133,6 +169,7 @@
       justify-content: center;
       align-items: center;
       text-align: center;
+      position: relative;
       background: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)), 
                   url('https://www.transparenttextures.com/patterns/natural-paper.png');
     }
@@ -143,6 +180,34 @@
       color: var(--sage);
       margin: 0;
       font-weight: 400;
+    }
+
+    .scroll-down-hint {
+      position: absolute;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      cursor: pointer;
+      text-align: center;
+      color: var(--sage);
+      transition: 0.3s;
+      z-index: 100;
+    }
+
+    .arrow-icon {
+      width: 20px;
+      height: 20px;
+      border-bottom: 2px solid var(--sage);
+      border-right: 2px solid var(--sage);
+      transform: rotate(45deg);
+      margin: 0 auto;
+      animation: arrowBounce 2s infinite;
+    }
+
+    @keyframes arrowBounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0) rotate(45deg); }
+      40% { transform: translateY(-10px) rotate(45deg); }
+      60% { transform: translateY(-5px) rotate(45deg); }
     }
 
     .date-block {
@@ -159,17 +224,20 @@
     .date-day { font-family: 'Playfair Display', serif; font-size: 55px; line-height: 1; margin: 10px 0; color: var(--dusty-rose); }
     .date-year { letter-spacing: 3px; font-weight: 300; font-size: 13px; }
 
+    /* --- CONTAINER --- */
     .container {
       max-width: 600px;
-      margin: -100px auto 80px;
-      background: var(--white);
-      backdrop-filter: blur(10px);
-      padding: 80px 40px;
+      margin: -50px auto 80px;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      padding: 60px 30px;
       position: relative;
-      box-shadow: 0 30px 70px rgba(0,0,0,0.03);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
       text-align: center;
       z-index: 20;
-      border-radius: 5px;
+      border-radius: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
     }
 
     .names-display {
@@ -179,7 +247,6 @@
       margin-bottom: 20px;
     }
 
-    /* Venue & Map Link Grouping */
     .venue-box {
       margin: 40px 0;
       padding: 25px;
@@ -206,7 +273,6 @@
 
     .nav-item:hover { background: var(--sage); color: white; }
 
-    /* Timeline */
     .timeline { margin: 40px auto; max-width: 280px; text-align: left; }
     .timeline-item { padding-left: 30px; margin-bottom: 20px; position: relative; }
     .timeline-item::before { content: ''; position: absolute; left: 0; top: 5px; width: 8px; height: 8px; background: var(--dusty-rose); border-radius: 50%; }
@@ -215,7 +281,6 @@
     .timeline-time { font-weight: 600; font-size: 11px; color: var(--sage); display: block; }
     .timeline-text { font-size: 14px; color: #666; }
 
-    /* RSVP & Secondary */
     .btn-main {
       display: block;
       background: var(--sage);
@@ -240,6 +305,7 @@
       color: #888;
       border-radius: 4px;
       transition: 0.3s;
+      cursor: pointer;
     }
     .btn-alt:hover { border-color: var(--sage); color: var(--sage); }
 
@@ -247,7 +313,6 @@
     .time-node span { display: block; font-size: 26px; font-family: 'Playfair Display'; color: var(--sage); }
     .time-node label { font-size: 9px; text-transform: uppercase; color: #aaa; letter-spacing: 2px; }
 
-    /* Floating Music Icon */
     #music-control {
       position: fixed;
       bottom: 25px;
@@ -280,17 +345,18 @@
 <body>
 
   <canvas id="petals-canvas"></canvas>
+  <img src="assets/images/top_flower.png" id="top-flowers" class="flower-header" alt="Flower Decor">
 
   <div id="invitation-cover">
     <div class="envelope-wrapper">
-      <h2>Wedding Invitation</h2>
-      <h1>Damia & Fauzan</h1>
+      <h2>Jemputan Walimatulurus</h2>
+      <h1>D & F</h1>
       <p id="guest-name" style="margin: 15px 0; color: #999; font-style: italic; min-height: 20px; font-size: 14px;"></p>
       
       <div class="seal-container" onclick="openInvitation()">
         <div class="seal-circle">BUKA</div>
       </div>
-      <p style="font-size: 10px; color: #ccc; margin-top: 15px; letter-spacing: 1px;">KLIK UNTUK MEMBUKA</p>
+      <p style="font-size: 10px; color: #bbb; margin-top: 15px; letter-spacing: 1.5px; font-weight: 500;">KLIK UNTUK MEMBUKA</p>
     </div>
   </div>
 
@@ -299,7 +365,7 @@
     <h1>Damia & Fauzan</h1>
     
     <div class="date-block">
-      <div class="date-month">November</div>
+      <div class="date-month">Ogos</div>
       <div class="date-day">22</div>
       <div class="date-year">2026</div>
     </div>
@@ -310,16 +376,33 @@
       <div class="time-node"><span id="mins">00</span><label>Minit</label></div>
       <div class="time-node"><span id="secs">00</span><label>Saat</label></div>
     </div>
+
+    <div class="scroll-down-hint" onclick="scrollToContent()">
+      <div class="arrow-icon"></div>
+    </div>
   </section>
 
-  <div class="container reveal">
-    <p style="font-family: 'Playfair Display'; font-style: italic; color: var(--gold); font-size: 18px;">Assalamualaikum w.b.t</p>
+<div id="main-content" class="container reveal">
     
-    <p style="font-size: 14px; color: #666; margin: 30px 0;">Dengan penuh kesyukuran, kami menjemput Tuan/Puan ke majlis meraikan ikatan cinta anakanda kami:</p>
+    <img src="assets/images/Salam.png" alt="Assalamualaikum" style="width: 250px; max-width: 80%; margin: 0 auto 5px; display: block; filter: invert(65%) sepia(18%) saturate(833%) hue-rotate(3deg) brightness(92%) contrast(89%);">
+    
+    <p style="font-family: 'Playfair Display'; font-style: italic; color: var(--gold); font-size: 18px; margin-top: 0;">& Salam Sejahtera</p>
+    
+    <div style="margin: 30px 0 20px;">
+      <p style="font-size: 18px; font-style: italic; color: var(--sage); font-weight: 600; margin: 0;">Khiruddin bin Zakaria</p>
+      <p style="font-size: 14px; font-family: 'Playfair Display'; font-style: italic; color: var(--gold); margin: 5px 0;">dan</p>
+      <p style="font-size: 18px; font-style: italic; color: var(--sage); font-weight: 600; margin: 0;">Nazidatulsima binti Najamudin</p>
+    </div>
+
+    <p style="font-size: 14px; color: #666; margin: 20px 0;">
+      Dengan penuh kesyukuran, menjemput <br>
+      Dato'/Datin/Prof/Dr/Tuan/Puan/Cik <br>
+      ke majlis meraikan ikatan cinta puteri kami:
+    </p>
     
     <div class="names-display">
       Khalisah Damia Widad<br>
-      <span style="font-size: 14px; font-family: 'Poppins'; color: #bbb; display: block; margin: 10px 0;">&</span>
+      <span style="font-size: 14px; font-family: 'Poppins'; color: #bbb; display: block; margin: 10px 0;">dengan pilihan hatinya</span>
       Muhammad Fauzan
     </div>
 
@@ -327,12 +410,13 @@
 
     <div class="venue-box">
       <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 11px; font-weight: 600; color: var(--sage); margin-bottom: 5px;">Lokasi Majlis</p>
-      <p style="font-size: 18px; margin: 0; color: var(--dark);"><strong>The Ark Event</strong></p>
-      <p style="font-size: 14px; color: #777; margin-bottom: 20px;">Lumut, Perak</p>
+      <p style="font-size: 18px; margin: 0; color: var(--dark);"><strong>Grand Ballroom</strong></p>
+      <p style="font-size: 16px; margin: 5px 0; color: var(--dark);">Ritz Garden Hotel</p>
+      <p style="font-size: 14px; color: #777; margin-bottom: 20px;">Seri Manjung, Perak</p>
       
       <div class="nav-links">
-        <a href="http://googleusercontent.com/maps.google.com/99" class="nav-item" target="_blank">Google Maps</a>
-        <a href="https://waze.com/ul?q=The%20Ark%20Event%20Lumut" class="nav-item" target="_blank">Waze</a>
+        <a href="http://maps.google.com/?q=Hotel+Ritz+Garden+Manjung" class="nav-item" target="_blank">Google Maps</a>
+        <a href="https://www.waze.com/en/live-map/directions/hotel-ritz-garden-manjung-jalan-iskandar-shah-5260-seri-manjung?latlng=4.198657847700111%2C100.65893769264221" class="nav-item" target="_blank">Waze</a>
       </div>
     </div>
 
@@ -352,16 +436,19 @@
       </div>
     </div>
 
-    <a href="https://wa.me/60123456789?text=Terima%20kasih%20atas%20jemputan.%20Saya%20(Nama%20Anda)%20sekeluarga%20ingin%20mengesahkan%20kehadiran%20ke%20majlis%20Damia%20%26%20Fauzan.%20Jumlah%20tetamu:%20(Jumlah)%20orang." class="btn-main">PENGESAHAN KEHADIRAN (RSVP)</a>
+    <a href="https://wa.me/60175815930?text=Terima%20kasih%20atas%20jemputan.%20Saya%20(Nama%20Anda)%20sekeluarga%20ingin%20mengesahkan%20kehadiran%20ke%20majlis%20Damia%20%26%20Fauzan.%20Jumlah%20tetamu:%20(Jumlah)%20orang." class="btn-main">PENGESAHAN KEHADIRAN (RSVP)</a>
 
     <div class="btn-group-half">
-      <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Wedding+Damia+%26+Fauzan&dates=20261122T030000Z/20261122T080000Z&location=The+Ark+Event,+Lumut" class="btn-alt" target="_blank">🗓️ Simpan Tarikh</a>
-      <a href="javascript:void(0)" class="btn-alt" onclick="toggleGift()">🎁 Salam Kaut</a>
+      <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Wedding+Damia+%26+Fauzan&dates=20260822T030000Z/20260822T080000Z&location=Grand+Ballroom,+Ritz+Garden+Hotel,+Seri+Manjung" class="btn-alt" target="_blank">🗓️ Simpan Tarikh</a>
+      <a href="javascript:void(0)" class="btn-alt" onclick="toggleGift()">🎁 Hadiah Kasih</a>
     </div>
     
     <div id="gift-content" class="gift-card">
+      <p style="font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 20px; font-style: italic;">
+        "Kehadiran anda adalah hadiah terindah buat kami, namun jika ingin memberi lebih, kami sangat menghargai tanda kasih daripada anda."
+      </p>
       <img src="assets/images/gift_QR.jpeg" style="width: 150px; border: 5px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.05);" alt="QR">
-      <p style="font-size: 14px; margin-top: 15px;"><strong>Maybank</strong><br>1234 5678 9012<br>Damia Widad</p>
+      <p style="font-size: 14px; margin-top: 15px;"><strong>Maybank</strong><br>1234 5678 9012<br>Khalisah Damia Widad</p>
     </div>
 
     <p style="margin-top: 60px; font-family: 'Playfair Display'; font-size: 14px; color: #888; font-style: italic; line-height: 1.8;">
@@ -393,12 +480,15 @@
       initPetals();
     }
 
+    function scrollToContent() {
+      document.getElementById('main-content').scrollIntoView({ behavior: 'smooth' });
+    }
+
     function toggleMusic() {
       if (music.paused) { music.play(); viz.classList.add('playing'); } 
       else { music.pause(); viz.classList.remove('playing'); }
     }
 
-    // Animation: Falling Petals
     const canvas = document.getElementById('petals-canvas');
     const ctx = canvas.getContext('2d');
     let petalArray = [];
@@ -428,8 +518,8 @@
       requestAnimationFrame(animate);
     }
 
-    // Countdown
-    const targetDate = new Date("Nov 22, 2026 11:00:00").getTime();
+    // Updated Countdown Date
+    const targetDate = new Date("Aug 22, 2026 11:00:00").getTime();
     setInterval(() => {
       const diff = targetDate - new Date().getTime();
       document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -448,6 +538,18 @@
       g.style.display = (g.style.display === 'block') ? 'none' : 'block';
       if(g.style.display === 'block') g.scrollIntoView({ behavior: 'smooth' });
     }
+
+    window.onscroll = function() {
+      const flower = document.getElementById('top-flowers');
+      const scrollPosition = window.scrollY;
+      const maxBlur = 10; 
+      const scrollThreshold = 400; 
+
+      let currentBlur = (scrollPosition / scrollThreshold) * maxBlur;
+      if (currentBlur > maxBlur) currentBlur = maxBlur;
+
+      flower.style.filter = `blur(${currentBlur}px) opacity(${1 - (currentBlur/25)})`;
+    };
   </script>
 </body>
 </html>
