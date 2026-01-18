@@ -81,12 +81,14 @@
       object-position: right center; /* Pins image to the right edge */
     }
 
-    /* Mobile Specific */
     @media (max-width: 768px) {
-      .flower-header { height: 180px; width: 150%; } 
+      .flower-header { 
+        height: 250px; /* Increase from 180px */
+        width: 180%;   /* Increase from 150% if you want it to wrap around the corners more */
+      } 
       .side-border { width: 30vw; }
     }
-
+    
     /* --- ENVELOPE OPENING --- */
     #invitation-cover {
       position: fixed;
