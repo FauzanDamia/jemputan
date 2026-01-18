@@ -40,10 +40,10 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 10;
+      z-index: 5;
     }
 
-    /* --- RESPONSIVE DECORATIONS --- */
+    /* --- RESPONSIVE DECORATIONS FIX --- */
     .flower-header {
       position: fixed;
       top: 0;
@@ -51,7 +51,10 @@
       transform: translateX(-50%);
       width: 100%;
       max-width: 900px;
-      z-index: 1000;
+      height: auto;
+      max-height: 25vh; /* Prevents vertical zooming */
+      object-fit: contain;
+      z-index: 1; /* Behind content */
       pointer-events: none;
       transition: filter 0.3s ease, opacity 0.3s ease;
     }
@@ -60,21 +63,22 @@
       position: fixed;
       top: 50%;
       transform: translateY(-50%);
-      width: clamp(150px, 25vw, 450px); 
-      z-index: 900;
+      width: clamp(120px, 20vw, 400px); 
+      height: 70vh; /* Prevents vertical zooming */
+      object-fit: contain;
+      z-index: 1; /* Behind content */
       pointer-events: none;
       transition: filter 0.3s ease, opacity 0.3s ease;
     }
 
-    .left-border { left: -20px; }
-    .right-border { right: -20px; }
+    .left-border { left: -30px; }
+    .right-border { right: -30px; }
 
-    /* Mobile Specific Adjustments */
     @media (max-width: 768px) {
-      .flower-header { width: 150%; } 
-      .side-border { width: 35vw; }
-      .left-border { left: -15px; }
-      .right-border { right: -15px; }
+      .flower-header { width: 140%; max-height: 20vh; } 
+      .side-border { width: 30vw; height: 50vh; }
+      .left-border { left: -20px; }
+      .right-border { right: -20px; }
     }
 
     /* --- ENVELOPE OPENING --- */
@@ -184,6 +188,7 @@
       align-items: center;
       text-align: center;
       position: relative;
+      z-index: 10;
       background: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)), 
                   url('https://www.transparenttextures.com/patterns/natural-paper.png');
     }
@@ -629,10 +634,7 @@
       
       const scrollPosition = window.scrollY;
       
-      // Blur increases but caps at 8px
       const currentBlur = Math.min((scrollPosition / 500) * 8, 8);
-      
-      // Opacity decreases but stops at 0.3 (Doesn't disappear)
       const currentOpacity = Math.max(1 - (scrollPosition / 600), 0.3);
 
       const decorations = [topFlower, leftBorder, rightBorder];
