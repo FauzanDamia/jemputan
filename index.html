@@ -50,8 +50,8 @@
       left: 50%;
       transform: translateX(-50%);
       width: 100%;
-      max-width: 1200px;
-      height: 250px; /* Fixed height to prevent "crazy zoom" */
+      max-width: 1500px;
+      height: 450px; /* Fixed height to prevent "crazy zoom" */
       object-fit: contain;
       object-position: top;
       z-index: 1; /* Behind content */
@@ -641,7 +641,7 @@
       const scrollPosition = window.scrollY;
       
       const currentBlur = Math.min((scrollPosition / 500) * 8, 8);
-      const currentOpacity = Math.max(1 - (scrollPosition / 600), 0.3);
+      const currentOpacity = Math.max(1 - (scrollPosition / 600), 0.6);
 
       const decorations = [topFlower, leftBorder, rightBorder];
       
