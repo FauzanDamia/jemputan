@@ -43,6 +43,36 @@
       z-index: 10;
     }
 
+    /* --- UPDATED RESPONSIVE SIDE BORDERS --- */
+    .side-border {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      /* Uses 25% of the screen width on desktop, but caps it at 400px */
+      width: clamp(150px, 25vw, 400px); 
+      z-index: 900;
+      pointer-events: none;
+      transition: filter 0.2s ease, opacity 0.2s ease;
+    }
+
+    .left-border { 
+      left: -20px; /* Slight offset to tuck the edge away */
+    }
+    
+    .right-border { 
+      right: -20px; 
+    }
+
+    /* Mobile Specific Adjustments */
+    @media (max-width: 768px) {
+      .side-border { 
+        width: 35vw; /* Larger relative to screen on mobile */
+        opacity: 0.8; 
+      }
+      .left-border { left: -15px; }
+      .right-border { right: -15px; }
+    }
+
     /* --- ENVELOPE OPENING --- */
     #invitation-cover {
       position: fixed;
@@ -367,7 +397,10 @@
 <body>
 
   <canvas id="petals-canvas"></canvas>
-  <img src="assets/images/top_flower.png" id="top-flowers" class="flower-header" alt="Flower Decor">
+  
+  <img src="assets/images/top_flower.png" id="top-flowers" class="flower-header" alt="Flower Top">
+  <img src="assets/images/Left Border.png" id="left-border" class="side-border left-border" alt="Flower Left">
+  <img src="assets/images/Right Border.png" id="right-border" class="side-border right-border" alt="Flower Right">
 
   <div id="invitation-cover">
     <div class="envelope-wrapper">
@@ -514,14 +547,12 @@
 
     function openInvitation() {
       document.getElementById('invitation-cover').classList.add('hide-cover');
-      
-      // Auto-unlock music
       const playPromise = music.play();
       if (playPromise !== undefined) {
         playPromise.then(() => {
           viz.classList.add('playing');
         }).catch(() => {
-          console.log("Autoplay blocked. User must interact with visualizer.");
+          console.log("Autoplay blocked.");
         });
       }
       initPetals();
@@ -532,13 +563,8 @@
     }
 
     function toggleMusic() {
-      if (music.paused) { 
-        music.play(); 
-        viz.classList.add('playing'); 
-      } else { 
-        music.pause(); 
-        viz.classList.remove('playing'); 
-      }
+      if (music.paused) { music.play(); viz.classList.add('playing'); } 
+      else { music.pause(); viz.classList.remove('playing'); }
     }
 
     function toggleInfo() {
@@ -563,7 +589,7 @@
           size: Math.random() * 4 + 2, 
           speed: Math.random() * 0.8 + 0.5,
           swing: Math.random() * 2, 
-          opacity: Math.random() * 0.3 + 0.2 // Softer opacity
+          opacity: Math.random() * 0.3 + 0.2
         });
       }
       animate();
@@ -602,12 +628,26 @@
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    /* --- PARALLAX BLUR --- */
+    /* --- PARALLAX BLUR & FADE FOR ALL DECORATIONS --- */
     window.onscroll = function() {
-      const flower = document.getElementById('top-flowers');
+      const topFlower = document.getElementById('top-flowers');
+      const leftBorder = document.getElementById('left-border');
+      const rightBorder = document.getElementById('right-border');
+      
       const scrollPosition = window.scrollY;
+      
+      // Calculate blur (max 12px) and opacity (fades out)
       const currentBlur = Math.min((scrollPosition / 500) * 12, 12);
-      flower.style.filter = `blur(${currentBlur}px) opacity(${1 - (currentBlur/25)})`;
+      const currentOpacity = 1 - (scrollPosition / 600);
+
+      const decorations = [topFlower, leftBorder, rightBorder];
+      
+      decorations.forEach(el => {
+        if(el) {
+          el.style.filter = `blur(${currentBlur}px)`;
+          el.style.opacity = Math.max(currentOpacity, 0);
+        }
+      });
     };
 
     window.onresize = () => { 
