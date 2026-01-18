@@ -43,17 +43,17 @@
       z-index: 5;
     }
 
-    /* --- RESPONSIVE DECORATIONS FIX --- */
+    /* --- FIXED DECORATIONS: ATTACHED TO EDGES --- */
     .flower-header {
       position: fixed;
       top: 0;
       left: 50%;
       transform: translateX(-50%);
       width: 100%;
-      max-width: 900px;
-      height: auto;
-      max-height: 25vh; /* Prevents vertical zooming */
+      max-width: 1200px;
+      height: 250px; /* Fixed height to prevent "crazy zoom" */
       object-fit: contain;
+      object-position: top;
       z-index: 1; /* Behind content */
       pointer-events: none;
       transition: filter 0.3s ease, opacity 0.3s ease;
@@ -61,24 +61,30 @@
 
     .side-border {
       position: fixed;
-      top: 50%;
-      transform: translateY(-50%);
-      width: clamp(120px, 20vw, 400px); 
-      height: 70vh; /* Prevents vertical zooming */
+      top: 0;
+      height: 100vh; /* Stretch full height */
+      width: 20vw; /* Responsive width */
+      max-width: 350px;
       object-fit: contain;
       z-index: 1; /* Behind content */
       pointer-events: none;
       transition: filter 0.3s ease, opacity 0.3s ease;
     }
 
-    .left-border { left: -30px; }
-    .right-border { right: -30px; }
+    .left-border { 
+      left: 0; 
+      object-position: left center; /* Pins image to the left edge */
+    }
+    
+    .right-border { 
+      right: 0; 
+      object-position: right center; /* Pins image to the right edge */
+    }
 
+    /* Mobile Specific */
     @media (max-width: 768px) {
-      .flower-header { width: 140%; max-height: 20vh; } 
-      .side-border { width: 30vw; height: 50vh; }
-      .left-border { left: -20px; }
-      .right-border { right: -20px; }
+      .flower-header { height: 180px; width: 150%; } 
+      .side-border { width: 30vw; }
     }
 
     /* --- ENVELOPE OPENING --- */
