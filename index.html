@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" style="overflow-x: hidden;">
+<html lang="ms" style="overflow-x: hidden;">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   
   <title>The Wedding of Damia & Fauzan</title>
   
@@ -11,7 +11,9 @@
   <meta property="og:image" content="https://fauzandamia.github.io/jemputan/assets/images/Banner.png">
   
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
     :root {
@@ -21,6 +23,7 @@
       --dark: #2d3436;
       --gold: #b39359;
       --white: rgba(255, 255, 255, 0.98);
+      --shadow-soft: 0 12px 40px rgba(0, 0, 0, 0.06);
     }
 
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
@@ -31,515 +34,421 @@
       background-color: var(--cream);
       color: var(--dark);
       overflow-x: hidden;
+      line-height: 1.6;
+      padding-bottom: 90px;
     }
 
-    #petals-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 5;
-    }
+    button { font-family: "Poppins", sans-serif; border: none; background: none; cursor: pointer; }
 
-    /* --- FIXED DECORATIONS: ATTACHED TO EDGES --- */
-    .flower-header {
-      position: fixed;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 1200px;
-      height: 450px; /* Fixed height to prevent "crazy zoom" */
-      object-fit: contain;
-      object-position: top;
-      z-index: 1; /* Behind content */
-      pointer-events: none;
-      transition: filter 0.3s ease, opacity 0.3s ease;
-    }
+    /* --- BACKGROUND & DECORATIONS --- */
+    #petals-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
 
-    .side-border {
-      position: fixed;
-      top: 0;
-      height: 100vh; /* Stretch full height */
-      width: 20vw; /* Responsive width */
-      max-width: 150px;
-      object-fit: contain;
-      z-index: 1; /* Behind content */
-      pointer-events: none;
-      transition: filter 0.3s ease, opacity 0.3s ease;
+    .flower-header, .side-border {
+      position: fixed; z-index: 1; pointer-events: none;
+      transition: filter 0.3s ease, opacity 0.3s ease; will-change: filter, opacity;
     }
-
-    .left-border { 
-      left: 0; 
-      object-position: left center; /* Pins image to the left edge */
-    }
-    
-    .right-border { 
-      right: 0; 
-      object-position: right center; /* Pins image to the right edge */
-    }
+    .flower-header { top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 1000px; height: 350px; object-fit: contain; object-position: top; }
+    .side-border { top: 0; height: 100vh; width: 20vw; max-width: 150px; object-fit: contain; }
+    .left-border { left: 0; object-position: left center; }
+    .right-border { right: 0; object-position: right center; }
 
     @media (max-width: 768px) {
-      .flower-header { 
-        height: 200px; /* Increase from 180px */
-        width: 150%;   /* Increase from 150% if you want it to wrap around the corners more */
-      } 
+      .flower-header { height: 200px; width: 150%; } 
       .side-border { width: 30vw; }
     }
 
     /* --- ENVELOPE OPENING --- */
     #invitation-cover {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--cream);
-      z-index: 3000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: var(--cream); z-index: 9000;
+      display: flex; justify-content: center; align-items: center;
       transition: transform 1.2s cubic-bezier(0.7, 0, 0.3, 1), opacity 1s;
     }
-
     .envelope-wrapper {
-      text-align: center;
-      padding: 60px 20px 40px;
-      max-width: 380px;
-      width: 90%;
-      background: #fff;
-      background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
-      box-shadow: 0 30px 60px rgba(0,0,0,0.12);
-      border-radius: 4px;
-      position: relative;
-      border: 1px solid #f0e6d2;
+      text-align: center; padding: 60px 20px 40px; max-width: 380px; width: 90%;
+      background: #fff url('https://www.transparenttextures.com/patterns/natural-paper.png');
+      box-shadow: 0 30px 60px rgba(0,0,0,0.12); border-radius: 4px; position: relative; border: 1px solid #f0e6d2;
     }
-
     .envelope-wrapper::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 100px;
-      background: #fdfaf5;
-      clip-path: polygon(0 0, 100% 0, 50% 100%);
-      border-bottom: 1px solid #e8dec9;
+      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 100px;
+      background: #fdfaf5; clip-path: polygon(0 0, 100% 0, 50% 100%); border-bottom: 1px solid #e8dec9;
     }
-
-    .envelope-wrapper h2 {
-      font-size: 10px;
-      letter-spacing: 4px;
-      color: var(--sage);
-      text-transform: uppercase;
-      margin: 40px 0 10px;
-      font-weight: 500;
-    }
-
-    .envelope-wrapper h1 {
-      font-family: 'Great Vibes', cursive;
-      font-size: clamp(40px, 9vw, 55px);
-      color: var(--dusty-rose);
-      margin: 0;
-    }
-
-    .seal-container {
-      margin-top: 40px;
-      cursor: pointer;
-      position: relative;
-      display: inline-block;
-      transition: transform 0.3s;
-    }
-
+    .envelope-wrapper h2 { font-size: 11px; letter-spacing: 4px; color: var(--sage); text-transform: uppercase; margin: 40px 0 10px; font-weight: 500; }
+    .envelope-wrapper h1 { font-family: 'Great Vibes', cursive; font-size: clamp(45px, 10vw, 60px); color: var(--dusty-rose); margin: 0; line-height: 1.2; }
+    .seal-container { margin-top: 40px; cursor: pointer; position: relative; display: inline-block; transition: transform 0.3s; }
+    .seal-container:hover { transform: scale(1.05); }
     .seal-circle {
-      width: 75px;
-      height: 75px;
-      background: var(--sage);
-      background-image: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2), transparent);
-      border: 1px solid rgba(0,0,0,0.1);
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      box-shadow: 0 10px 20px rgba(122, 141, 128, 0.3);
-      position: relative;
-      z-index: 2;
+      width: 75px; height: 75px; background: var(--sage); border-radius: 50%;
+      display: flex; justify-content: center; align-items: center; color: white;
+      font-size: 12px; font-weight: 600; letter-spacing: 2px; box-shadow: 0 10px 20px rgba(122, 141, 128, 0.3); position: relative; z-index: 2;
     }
-
     .seal-container::after {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      border-radius: 50%;
-      border: 2px solid var(--sage);
-      opacity: 0.5;
-      animation: pulse 2s infinite;
+      content: ""; position: absolute; top: -4px; left: -4px; right: -4px; bottom: -4px;
+      border-radius: 50%; border: 2px solid var(--sage); opacity: 0.5; animation: pulse 2s infinite;
     }
-
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 0.5; }
-      100% { transform: scale(1.4); opacity: 0; }
-    }
-
+    @keyframes pulse { 0% { transform: scale(0.9); opacity: 0.8; } 100% { transform: scale(1.4); opacity: 0; } }
     .hide-cover { transform: translateY(-100%); opacity: 0; pointer-events: none; }
 
-    /* --- HERO --- */
-    .hero {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      position: relative;
-      z-index: 10;
-      background: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)), 
-                  url('https://www.transparenttextures.com/patterns/natural-paper.png');
+    /* --- MAIN LAYOUT & SECTIONS --- */
+    .section-container {
+      max-width: 600px; margin: 0 auto;
+      padding: 50px 30px; position: relative; z-index: 20;
+      border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.6);
+      text-align: center; margin-top: 20px; box-shadow: var(--shadow-soft);
+    }
+    
+    /* Transparent Card for Utama */
+    #utama { 
+      margin-top: 60px; 
+      background: rgba(255, 255, 255, 0.65); /* Transparent to see flowers */
+      backdrop-filter: blur(8px); 
+      -webkit-backdrop-filter: blur(8px);
     }
 
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(40px, 10vw, 85px);
-      color: var(--sage);
-      margin: 0;
-      font-weight: 400;
+    /* Pure White Cards for the rest */
+    .pure-white-card {
+      background: #ffffff;
     }
 
-    .scroll-down-hint {
-      position: absolute;
-      bottom: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      cursor: pointer;
-      text-align: center;
-      color: var(--sage);
-      z-index: 100;
-    }
-
-    .arrow-icon {
-      width: 15px;
-      height: 15px;
-      border-bottom: 2px solid var(--sage);
-      border-right: 2px solid var(--sage);
-      transform: rotate(45deg);
-      margin: 0 auto;
-      animation: arrowBounce 2s infinite;
-    }
-
-    @keyframes arrowBounce {
-      0%, 20%, 50%, 80%, 100% { transform: translateY(0) rotate(45deg); }
-      40% { transform: translateY(-10px) rotate(45deg); }
-      60% { transform: translateY(-5px) rotate(45deg); }
-    }
-
-    .date-block {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 40px 0;
-      padding: 20px 40px;
-      border: 1px solid rgba(122, 141, 128, 0.2);
-      background: var(--white);
-    }
-
-    .date-month { text-transform: uppercase; letter-spacing: 5px; font-size: 13px; color: var(--sage); }
+    .hero-names h1 { font-family: 'Playfair Display', serif; font-size: clamp(45px, 11vw, 80px); color: var(--sage); margin: 10px 0; font-weight: 400; line-height: 1.1; }
+    .date-block { display: inline-flex; flex-direction: column; align-items: center; margin: 25px 0; padding: 20px 45px; border: 1px solid rgba(122, 141, 128, 0.2); background: rgba(255, 255, 255, 0.7); border-radius: 8px; }
+    .date-month { text-transform: uppercase; letter-spacing: 5px; font-size: 13px; color: var(--sage); font-weight: 500;}
     .date-day { font-family: 'Playfair Display', serif; font-size: 55px; line-height: 1; margin: 10px 0; color: var(--dusty-rose); }
-    .date-year { letter-spacing: 3px; font-weight: 300; font-size: 13px; }
+    .date-year { letter-spacing: 3px; font-weight: 400; font-size: 13px; color: #555;}
+    
+    #timer { display: flex; justify-content: center; gap: 20px; margin: 25px 0; }
+    .time-node { display: flex; flex-direction: column; align-items: center; }
+    .time-node span { font-size: 28px; font-family: 'Playfair Display', serif; color: var(--sage); line-height: 1; }
+    .time-node label { font-size: 9px; text-transform: uppercase; color: #999; letter-spacing: 2px; margin-top: 5px; }
 
-    /* --- CONTAINER --- */
-    .container {
-      max-width: 600px;
-      margin: -50px auto 40px;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      padding: 60px 30px;
-      position: relative;
-      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.05);
-      text-align: center;
-      z-index: 20;
-      border-radius: 15px;
-      border: 1px solid rgba(255, 255, 255, 0.4);
+    .divider { height: 1px; width: 80px; background: var(--gold); margin: 30px auto; opacity: 0.6; }
+
+    /* Parents & Couple */
+    .salam-image-mask {
+      width: 80%;
+      max-width: 250px;
+      height: 60px;
+      margin: 0 auto;
+      background-color: var(--gold);
+      /* This masks the gold background to the shape of your PNG */
+      -webkit-mask: url('assets/images/Salam.png') no-repeat center / contain;
+      mask: url('assets/images/Salam.png') no-repeat center / contain;
     }
 
-    .names-display {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(26px, 6vw, 36px);
-      color: var(--sage);
-      margin-bottom: 20px;
+    .names-display { font-family: 'Playfair Display', serif; font-size: clamp(24px, 6vw, 32px); color: var(--sage); margin-bottom: 20px; line-height: 1.2; }
+    .names-display .sub-name { font-size: 14px; font-family: 'Poppins', sans-serif; color: var(--sage); display: block; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px;}
+    .names-display .connector { font-size: 14px; font-family: 'Poppins', sans-serif; color: #aaa; display: block; margin: 20px 0; font-weight: 400; font-style: normal; }
+
+    /* Venue Box */
+    .venue-box { margin: 30px 0; padding: 30px 25px; background: #fafafa; border-radius: 12px; border: 1px solid #eee; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+    .btn-outline {
+      text-decoration: none; font-size: 13px; font-weight: 500; color: var(--sage);
+      border: 1.5px solid var(--sage); padding: 10px 24px; border-radius: 30px; transition: all 0.3s ease; display: inline-block; margin: 5px;
     }
+    .btn-outline:hover { background: var(--sage); color: white; }
 
-    .venue-box {
-      margin: 40px 0;
-      padding: 25px;
-      background: #fdfdfd;
-      border-radius: 10px;
-      border: 1px solid #f0f0f0;
-    }
-
-    .nav-links {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 20px;
-    }
-
-    .nav-item {
-      text-decoration: none;
-      font-size: 12px;
-      color: var(--sage);
-      border: 1px solid var(--sage);
-      padding: 10px 20px;
-      border-radius: 25px;
-      transition: 0.3s;
-    }
-
-    .nav-item:hover { background: var(--sage); color: white; }
-
-    .timeline { margin: 40px auto; max-width: 280px; text-align: left; }
-    .timeline-item { padding-left: 30px; margin-bottom: 25px; position: relative; }
-    .timeline-item::before { content: ''; position: absolute; left: 0; top: 6px; width: 8px; height: 8px; background: var(--dusty-rose); border-radius: 50%; }
-    .timeline-item::after { content: ''; position: absolute; left: 3.5px; top: 20px; width: 1px; height: 30px; background: #ddd; }
+    /* Timeline */
+    .timeline { margin: 30px auto; max-width: 300px; text-align: left; }
+    .timeline-item { padding-left: 35px; margin-bottom: 30px; position: relative; }
+    .timeline-item::before { content: ''; position: absolute; left: 0; top: 6px; width: 10px; height: 10px; background: var(--dusty-rose); border-radius: 50%; box-shadow: 0 0 0 3px rgba(212, 163, 163, 0.2); }
+    .timeline-item::after { content: ''; position: absolute; left: 4.5px; top: 22px; width: 1px; height: calc(100% + 5px); background: #e0e0e0; }
     .timeline-item:last-child::after { display: none; }
-    .timeline-time { font-weight: 600; font-size: 11px; color: var(--sage); display: block; }
-    .timeline-text { font-size: 14px; color: #555; }
+    .timeline-time { font-weight: 600; font-size: 12px; color: var(--sage); display: block; letter-spacing: 1px;}
+    .timeline-text { font-size: 15px; color: #444; margin-top: 3px; display: block;}
 
-    .btn-main {
-      display: block;
-      background: var(--sage);
-      color: white;
-      text-decoration: none;
-      padding: 18px;
-      font-size: 13px;
-      letter-spacing: 2px;
-      font-weight: 600;
-      margin: 40px 0 20px;
-      border-radius: 4px;
-      transition: 0.3s;
-      box-shadow: 0 4px 15px rgba(122, 141, 128, 0.2);
-      animation: btnPulse 2s infinite ease-in-out;
+    /* Colors Info */
+    .color-circle { width: 30px; height: 30px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); display: inline-block; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin: 0 5px; }
+
+    /* --- BOTTOM NAVIGATION BAR --- */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; width: 100%;
+      background: var(--sage); box-shadow: 0 -5px 20px rgba(0,0,0,0.15);
+      display: flex; justify-content: space-around; align-items: center;
+      padding: 10px 15px 15px; z-index: 5000;
+      border-top-left-radius: 20px; border-top-right-radius: 20px;
     }
-
-    @keyframes btnPulse {
-        0% { transform: scale(1); box-shadow: 0 4px 15px rgba(122, 141, 128, 0.2); }
-        50% { transform: scale(1.02); box-shadow: 0 8px 25px rgba(122, 141, 128, 0.4); }
-        100% { transform: scale(1); box-shadow: 0 4px 15px rgba(122, 141, 128, 0.2); }
+    .nav-icon {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.7); text-decoration: none; font-size: 10px; letter-spacing: 1px;
+      transition: all 0.3s; background: none; border: none; font-family: 'Poppins', sans-serif; cursor: pointer;
     }
-
-    .btn-group-half { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .btn-alt {
-      text-decoration: none;
-      padding: 12px;
-      font-size: 11px;
-      border: 1px solid #eee;
-      color: #777;
-      border-radius: 4px;
-      transition: 0.3s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .nav-icon i { font-size: 20px; margin-bottom: 5px; transition: transform 0.3s; }
+    .nav-icon:hover, .nav-icon.active { color: #fff; }
+    .nav-icon:hover i { transform: translateY(-3px); }
+    
+    /* Floating Center Button */
+    .nav-home {
+      position: relative; top: -20px;
+      background: #fdfaf5; color: var(--sage) !important;
+      width: 60px; height: 60px; border-radius: 50%;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      border: 4px solid var(--sage);
     }
+    .nav-home i { font-size: 24px; margin-bottom: 2px; }
 
-    .info-card { 
-      margin-top: 20px; 
-      padding: 25px; 
-      background: #fafafa; 
-      border: 1px dashed #ddd; 
-      display: none; 
-      border-radius: 8px;
+    /* --- IN-APP RSVP MODAL --- */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);
+      z-index: 8000; display: none; justify-content: center; align-items: center;
+      opacity: 0; transition: opacity 0.3s ease;
     }
-
-    .color-circle {
-      width: 25px;
-      height: 25px;
-      border-radius: 50%;
-      border: 1px solid rgba(0,0,0,0.1);
-      display: inline-block;
+    .modal-overlay.active { display: flex; opacity: 1; }
+    
+    .rsvp-card {
+      background: var(--cream); width: 90%; max-width: 400px;
+      border-radius: 12px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+      transform: translateY(30px); transition: transform 0.3s ease;
+      position: relative;
     }
+    .modal-overlay.active .rsvp-card { transform: translateY(0); }
 
-    .organizer-contact {
-        margin-top: 30px;
-        font-size: 12px;
-        color: #888;
-        border-top: 1px solid #f0f0f0;
-        padding-top: 20px;
+    .rsvp-header {
+      background: var(--sage); color: white; padding: 20px;
+      text-align: center; position: relative; font-family: 'Playfair Display', serif; font-size: 22px; letter-spacing: 2px;
     }
-
-    #timer { display: flex; justify-content: center; gap: 20px; margin: 30px 0; }
-    .time-node span { display: block; font-size: 26px; font-family: 'Playfair Display'; color: var(--sage); }
-    .time-node label { font-size: 9px; text-transform: uppercase; color: #aaa; letter-spacing: 2px; }
-
-    #music-control {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      width: 45px;
-      height: 45px;
-      background: white;
-      border-radius: 50%;
-      border: 1px solid #eee;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      z-index: 4000;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    .close-btn {
+      position: absolute; right: 15px; top: 15px; font-size: 24px; color: white;
+      cursor: pointer; background: none; border: none; line-height: 1; opacity: 0.8;
     }
+    .close-btn:hover { opacity: 1; }
+
+    .rsvp-body { padding: 25px; }
+    .input-group { margin-bottom: 15px; text-align: left; }
+    .input-group label { display: block; font-size: 11px; font-weight: 600; color: var(--sage); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+    .input-group input[type="text"], .input-group input[type="tel"] {
+      width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px;
+      font-family: 'Poppins', sans-serif; font-size: 14px; background: #fff; outline: none;
+    }
+    .input-group input:focus { border-color: var(--sage); }
+
+    .guest-counters { display: flex; gap: 15px; margin-top: 20px; }
+    .counter-box { flex: 1; text-align: center; }
+    .counter-label { font-size: 11px; color: var(--gold); font-weight: 600; margin-bottom: 8px; text-transform: uppercase; }
+    .counter-controls { display: flex; align-items: center; justify-content: space-between; background: #fff; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;}
+    .cnt-btn { width: 35px; height: 40px; background: #eee; color: #555; border: none; font-size: 18px; cursor: pointer; transition: 0.2s;}
+    .cnt-btn:hover { background: #ddd; }
+    .cnt-val { width: 40px; text-align: center; font-size: 15px; font-weight: 500; border: none; background: #fff; pointer-events: none;}
+
+    .btn-submit {
+      width: 100%; background: var(--sage); color: white; padding: 15px; font-size: 14px;
+      font-weight: 600; letter-spacing: 2px; border: none; border-radius: 6px; margin-top: 25px;
+      cursor: pointer; transition: all 0.3s;
+    }
+    .btn-submit:hover:not(:disabled) { background: #6a7c70; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(122,141,128,0.3); }
+    .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; }
+
+    /* Success Message State */
+    #rsvp-success { display: none; text-align: center; padding: 40px 20px; }
+    #rsvp-success i { font-size: 50px; color: var(--sage); margin-bottom: 15px; }
+    #rsvp-success h3 { font-family: 'Playfair Display', serif; color: var(--sage); }
+
+    .reveal { opacity: 0; transform: translateY(40px); transition: 1s all cubic-bezier(0.5, 0, 0, 1); }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    
+    /* Music Control adjusted for bottom nav */
+    #music-control { position: fixed; top: 20px; right: 20px; width: 45px; height: 45px; background: rgba(255,255,255,0.9); border-radius: 50%; border: 1px solid #eee; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 4000; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
     .visualizer { display: flex; align-items: flex-end; gap: 3px; height: 12px; }
-    .bar { width: 2px; background: var(--sage); border-radius: 2px; }
+    .bar { width: 3px; background: var(--sage); border-radius: 2px; height: 4px; transition: height 0.2s;}
     .playing .bar { animation: bounce 0.8s infinite ease-in-out; }
     .playing .bar:nth-child(2) { animation-delay: 0.2s; }
     .playing .bar:nth-child(3) { animation-delay: 0.4s; }
     @keyframes bounce { 0%, 100% { height: 4px; } 50% { height: 12px; } }
-
-    .reveal { opacity: 0; transform: translateY(30px); transition: 1s all ease-out; }
-    .reveal.active { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body>
 
   <canvas id="petals-canvas"></canvas>
-  
-  <img src="assets/images/top_flower.png" id="top-flowers" class="flower-header" alt="Flower Top">
-  <img src="assets/images/left_flower.png" id="left-border" class="side-border left-border" alt="Flower Left">
-  <img src="assets/images/right_flower.png" id="right-border" class="side-border right-border" alt="Flower Right">
+  <img src="assets/images/top_flower.png" id="top-flowers" class="flower-header" alt="" loading="lazy" onerror="this.style.display='none'">
+  <img src="assets/images/left_flower.png" id="left-border" class="side-border left-border" alt="" loading="lazy" onerror="this.style.display='none'">
+  <img src="assets/images/right_flower.png" id="right-border" class="side-border right-border" alt="" loading="lazy" onerror="this.style.display='none'">
+
+  <audio id="wedding-music" loop>
+    <source src="assets/music/Canon in D - Kalimba Cover - Sam Salvador.mp3" type="audio/mp3">
+  </audio>
+  <button id="music-control" onclick="toggleMusic()">
+    <div class="visualizer" id="viz">
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+  </button>
 
   <div id="invitation-cover">
     <div class="envelope-wrapper">
       <h2>Jemputan Walimatulurus</h2>
       <h1>D & F</h1>
-      <p id="guest-name" style="margin: 15px 0; color: #999; font-style: italic; min-height: 20px; font-size: 14px;"></p>
-      
+      <p id="guest-name" style="margin: 15px 0; color: #999; font-style: italic; min-height: 20px; font-size: 15px;"></p>
       <div class="seal-container" onclick="openInvitation()">
         <div class="seal-circle">BUKA</div>
       </div>
-      <p style="font-size: 10px; color: #bbb; margin-top: 15px; letter-spacing: 1.5px; font-weight: 500;">KLIK UNTUK MEMBUKA</p>
     </div>
   </div>
 
-  <section class="hero">
-    <p style="letter-spacing: 8px; color: var(--gold); font-size: 11px;">Walimatulurus</p>
-    <h1>Damia & Fauzan</h1>
-    
-    <div class="date-block">
-      <div class="date-month">Ogos</div>
-      <div class="date-day">22</div>
-      <div class="date-year">2026</div>
-    </div>
-
-    <div id="timer">
-      <div class="time-node"><span id="days">00</span><label>Hari</label></div>
-      <div class="time-node"><span id="hours">00</span><label>Jam</label></div>
-      <div class="time-node"><span id="mins">00</span><label>Minit</label></div>
-      <div class="time-node"><span id="secs">00</span><label>Saat</label></div>
-    </div>
-
-    <div class="scroll-down-hint" onclick="scrollToContent()">
-      <div class="arrow-icon"></div>
-    </div>
-  </section>
-
-  <div id="main-content" class="container reveal">
-    
-    <img src="assets/images/Salam.png" alt="Assalamualaikum" style="width: 250px; max-width: 80%; margin: 0 auto 5px; display: block; filter: invert(65%) sepia(18%) saturate(833%) hue-rotate(3deg) brightness(92%) contrast(89%);">
-    
-    <p style="font-family: 'Playfair Display'; font-style: italic; color: var(--gold); font-size: 18px; margin-top: 0;">& Salam Sejahtera</p>
-    
-    <div style="margin: 30px 0 20px;">
-      <p style="font-size: 18px; font-style: italic; color: var(--sage); font-weight: 600; margin: 0;">Khiruddin bin Zakaria</p>
-      <p style="font-size: 14px; font-family: 'Playfair Display'; font-style: italic; color: var(--gold); margin: 5px 0;">dan</p>
-      <p style="font-size: 18px; font-style: italic; color: var(--sage); font-weight: 600; margin: 0;">Nazidatulsima binti Najamudin</p>
-    </div>
-
-    <p style="font-size: 14px; color: #666; margin: 20px 0; line-height: 1.8;">
-      Dengan penuh kesyukuran, menjemput <br>
-      Dato'/Datin/Prof/Dr/Tuan/Puan/Cik <br>
-      ke majlis meraikan ikatan cinta puteri kami:
-    </p>
-    
-    <div class="names-display">
-      Khalisah Damia Widad binti Khiruddin<br>
-      <span style="font-size: 14px; font-family: 'Poppins'; color: #bbb; display: block; margin: 10px 0;">dengan pilihan hatinya</span>
-      Muhammad Fauzan bin Muhammad Azahar
-    </div>
-
-    <div class="divider" style="height: 1px; width: 60px; background: var(--gold); margin: 30px auto;"></div>
-
-    <div class="venue-box">
-      <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 11px; font-weight: 600; color: var(--sage); margin-bottom: 5px;">Lokasi Majlis</p>
-      <p style="font-size: 18px; margin: 0; color: var(--dark);"><strong>Grand Ballroom</strong></p>
-      <p style="font-size: 16px; margin: 5px 0; color: var(--dark);">Ritz Garden Hotel</p>
-      <p style="font-size: 14px; color: #777; margin-bottom: 20px;">Seri Manjung, Perak</p>
+  <main>
+    <section id="utama" class="section-container reveal">
+      <p style="letter-spacing: 6px; color: var(--gold); font-size: 11px; font-weight: 500; text-transform: uppercase; margin-bottom: 5px;">Walimatulurus</p>
+      <div class="hero-names">
+        <h1>Damia & Fauzan</h1>
+      </div>
       
-      <div class="nav-links" style="flex-wrap: wrap;">
-        <a href="https://maps.app.goo.gl/E7MVQC3pZnoHWCN9A" class="nav-item" target="_blank">Google Maps</a>
-        <a href="https://www.waze.com/en/live-map/directions/hotel-ritz-garden-manjung-jalan-iskandar-shah-5260-seri-manjung?latlng=4.1986596525591455%2C100.65893769264221" class="nav-item" target="_blank">Waze</a>
+      <div class="date-block">
+        <div class="date-month">Ogos</div>
+        <div class="date-day">22</div>
+        <div class="date-year">2026</div>
       </div>
-    </div>
 
-    <div style="text-transform: uppercase; letter-spacing: 2px; font-size: 11px; font-weight: 600; color: var(--sage); margin-top: 40px;">Aturcara Majlis</div>
-    <div class="timeline">
-      <div class="timeline-item">
-        <span class="timeline-time">11:00 AM</span>
-        <span class="timeline-text">Jamuan Makan Bermula</span>
+      <div id="timer">
+        <div class="time-node"><span id="days">00</span><label>Hari</label></div>
+        <div class="time-node"><span id="hours">00</span><label>Jam</label></div>
+        <div class="time-node"><span id="mins">00</span><label>Minit</label></div>
+        <div class="time-node"><span id="secs">00</span><label>Saat</label></div>
       </div>
-      <div class="timeline-item">
-        <span class="timeline-time">12:30 PM</span>
-        <span class="timeline-text">Ketibaan Pasangan Pengantin</span>
-      </div>
-      <div class="timeline-item">
-        <span class="timeline-time">04:00 PM</span>
-        <span class="timeline-text">Majlis Bersurai</span>
-      </div>
-    </div>
+      
+      <div class="divider"></div>
+      
+      <div class="salam-image-mask"></div>
+      <p style="font-size: 14px; color: var(--gold); font-family: 'Playfair Display', serif; font-style: italic; margin-top: 5px; margin-bottom: 20px;">dan Salam Sejahtera</p>
 
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeofVmYNiCZLaPcBtFQmRsRO3_nlVYnTyfRvoZBbHwRDSnoCw/viewform?usp=sf_link" class="btn-main" target="_blank">PENGESAHAN KEHADIRAN (RSVP)</a>
+      <div style="margin: 20px 0;">
+        <p style="font-size: 18px; font-style: italic; color: var(--sage); font-weight: 600; margin: 0;">Khiruddin bin Zakaria</p>
+        <p style="font-size: 14px; font-family: 'Playfair Display', serif; font-style: italic; color: var(--gold); margin: 5px 0;">&</p>
+        <p style="font-size: 18px; font-style: italic; color: var(--sage); font-weight: 600; margin: 0;">Nazidatulsima binti Najamudin</p>
+      </div>
 
-    <div class="btn-group-half">
-      <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Wedding+Damia+%26+Fauzan&dates=20260822T030000Z/20260822T080000Z&location=Grand+Ballroom,+Ritz+Garden+Hotel,+Seri+Manjung&details=Majlis+Walimatulurus+Damia+dan+Fauzan" class="btn-alt" target="_blank">🗓️ Simpan Tarikh</a>
-      <a href="javascript:void(0)" class="btn-alt" onclick="toggleInfo()">👗 Tema Pakaian</a>
-    </div>
-    
-    <div id="info-content" class="info-card">
-      <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 11px; font-weight: 600; color: var(--sage); margin-bottom: 15px;">Tema Pakaian</p>
-      <p style="font-size: 14px; color: #666; margin-bottom: 15px;">
-        Bagi menyerikan lagi majlis, para tetamu digalakkan memakai pakaian bertemakan warna:
+      <p style="font-size: 14px; color: #555; margin: 20px 0; line-height: 1.8;">
+        Dengan segala hormatnya mempersilakan <br>
+        Dato'/Datin/Prof/Dr/Tuan/Puan/Cik <br>
+        ke majlis meraikan ikatan cinta puteri kami:
       </p>
       
-      <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 20px;">
-        <div class="color-circle" style="background: #E5E4E2;" title="Silver"></div>
-        <div class="color-circle" style="background: #7a8d80;" title="Sage Green"></div>
-        <div class="color-circle" style="background: #fdfaf5;" title="Cream"></div>
+      <div class="names-display">
+        Khalisah Damia Widad
+        <span class="sub-name">Binti Khiruddin</span>
+        
+        <span class="connector">dengan pilihan hatinya</span>
+        
+        Muhammad Fauzan
+        <span class="sub-name">Bin Azhar</span>
       </div>
+    </section>
 
-      <p style="font-size: 12px; color: #888; font-style: italic;">
-        *Atau sebarang pakaian yang sopan & bersesuaian.*
-      </p>
-    </div>
-
-    <div class="organizer-contact">
-        Hubungi kami jika ada sebarang pertanyaan:<br>
-        <div style="margin-top: 10px;">
-            <a href="https://wa.me/601111875246" style="color: var(--sage); text-decoration: none; font-weight: 600; border: 1px solid #eee; padding: 5px 15px; border-radius: 20px; display: inline-block;">WhatsApp Shima & Khiruddin</a>
+    <section id="lokasi" class="section-container pure-white-card reveal" style="margin-top: 40px;">
+      <i class="fas fa-map-marker-alt" style="font-size: 30px; color: var(--gold); margin-bottom: 10px;"></i>
+      <p style="text-transform: uppercase; letter-spacing: 3px; font-size: 12px; font-weight: 600; color: var(--sage);">Lokasi Majlis</p>
+      
+      <div class="venue-box">
+        <p style="font-size: 20px; margin: 0; color: var(--dark);"><strong>Grand Ballroom</strong></p>
+        <p style="font-size: 17px; margin: 5px 0; color: var(--dark);">Ritz Garden Hotel</p>
+        <p style="font-size: 14px; color: #777; margin-bottom: 25px;">Seri Manjung, Perak</p>
+        
+        <div>
+          <a href="https://maps.app.goo.gl/E7MVQC3pZnoHWCN9A" class="btn-outline" target="_blank"><i class="fas fa-map"></i> Google Maps</a>
+          <a href="https://www.waze.com/en/live-map/directions/hotel-ritz-garden-manjung-jalan-iskandar-shah-5260-seri-manjung?latlng=4.1986596525591455%2C100.65893769264221" class="btn-outline" target="_blank"><i class="fab fa-waze"></i> Waze</a>
         </div>
-    </div>
+      </div>
+    </section>
 
-    <p style="margin-top: 60px; font-family: 'Playfair Display'; font-size: 14px; color: #888; font-style: italic; line-height: 1.8;">
-      "Dan kami jadikan kamu berpasang-pasangan"<br>
-      (Surah An-Naba' 78:8)
-    </p>
-  </div>
+    <section id="kalendar" class="section-container pure-white-card reveal" style="margin-top: 40px;">
+      <i class="far fa-calendar-alt" style="font-size: 30px; color: var(--gold); margin-bottom: 10px;"></i>
+      <p style="text-transform: uppercase; letter-spacing: 3px; font-size: 12px; font-weight: 600; color: var(--sage);">Aturcara Majlis</p>
+      
+      <div class="timeline">
+        <div class="timeline-item">
+          <span class="timeline-time">11:00 AM</span>
+          <span class="timeline-text">Jamuan Makan Bermula</span>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-time">12:30 PM</span>
+          <span class="timeline-text">Ketibaan Pasangan Pengantin</span>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-time">04:00 PM</span>
+          <span class="timeline-text">Majlis Bersurai</span>
+        </div>
+      </div>
 
-  <audio id="wedding-music" loop>
-    <source src="assets/music/Canon in D - Kalimba Cover - Sam Salvador.mp3" type="audio/mp3">
-  </audio>
-  <div id="music-control" onclick="toggleMusic()">
-    <div class="visualizer" id="viz">
-      <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+      <div class="divider"></div>
+
+      <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 12px; font-weight: 600; color: var(--sage); margin-bottom: 15px;">Tema Pakaian</p>
+      <div style="display: flex; justify-content: center; margin-bottom: 10px;">
+        <div class="color-circle" style="background: #E5E4E2;" title="Silver"></div>
+        <div class="color-circle" style="background: var(--sage);" title="Sage Green"></div>
+        <div class="color-circle" style="background: var(--cream);" title="Cream"></div>
+      </div>
+      <p style="font-size: 12px; color: #888; font-style: italic;">Sopan & Bersesuaian</p>
+
+      <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Wedding+Damia+%26+Fauzan&dates=20260822T030000Z/20260822T080000Z&location=Grand+Ballroom,+Ritz+Garden+Hotel,+Seri+Manjung&details=Majlis+Walimatulurus+Damia+dan+Fauzan" class="btn-outline" style="margin-top: 20px;" target="_blank"><i class="fas fa-calendar-plus"></i> Simpan Tarikh</a>
+    </section>
+
+    <section id="kenalan" class="section-container pure-white-card reveal" style="margin-top: 40px; margin-bottom: 40px;">
+      <i class="fas fa-phone-alt" style="font-size: 30px; color: var(--gold); margin-bottom: 10px;"></i>
+      <p style="text-transform: uppercase; letter-spacing: 3px; font-size: 12px; font-weight: 600; color: var(--sage);">Hubungi Kami</p>
+      
+      <p style="font-size: 13px; color: #666; margin-bottom: 20px;">Sekiranya terdapat sebarang pertanyaan:</p>
+      <a href="https://wa.me/601111875246" class="btn-outline"><i class="fab fa-whatsapp"></i> WhatsApp Keluarga</a>
+
+      <p style="margin-top: 50px; font-family: 'Playfair Display', serif; font-size: 15px; color: #999; font-style: italic; line-height: 1.8;">
+        "Dan kami jadikan kamu berpasang-pasangan"<br>
+        <span style="font-size: 12px; font-family: 'Poppins', sans-serif;">(Surah An-Naba' 78:8)</span>
+      </p>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <a href="#kenalan" class="nav-icon" onclick="setActiveNav(this)"><i class="fas fa-phone"></i>KENALAN</a>
+    <a href="#lokasi" class="nav-icon" onclick="setActiveNav(this)"><i class="fas fa-map-marked-alt"></i>LOKASI</a>
+    <a href="#utama" class="nav-icon nav-home active" onclick="setActiveNav(this)"><i class="fas fa-home"></i>UTAMA</a>
+    <a href="#kalendar" class="nav-icon" onclick="setActiveNav(this)"><i class="far fa-calendar-alt"></i>KALENDAR</a>
+    <button class="nav-icon" onclick="openRsvpModal()"><i class="fas fa-clipboard-list"></i>RSVP</button>
+  </nav>
+
+  <div class="modal-overlay" id="rsvpModal">
+    <div class="rsvp-card">
+      <div class="rsvp-header">
+        RSVP
+        <button class="close-btn" onclick="closeRsvpModal()">×</button>
+      </div>
+      
+      <div class="rsvp-body" id="rsvp-form-container">
+        <form id="rsvpForm" onsubmit="submitRSVP(event)">
+          <div class="input-group">
+            <label>Nama</label>
+            <input type="text" id="rsvp-nama" placeholder="Sila masukkan nama penuh" required>
+          </div>
+          <div class="input-group">
+            <label>No. Telefon</label>
+            <input type="tel" id="rsvp-tel" placeholder="Contoh: 0123456789" required>
+          </div>
+
+          <div class="guest-counters">
+            <div class="counter-box">
+              <div class="counter-label">Jumlah Dewasa</div>
+              <div class="counter-controls">
+                <button type="button" class="cnt-btn" onclick="updateCounter('dewasa', -1)">-</button>
+                <input type="text" id="val-dewasa" class="cnt-val" value="1" readonly>
+                <button type="button" class="cnt-btn" onclick="updateCounter('dewasa', 1)">+</button>
+              </div>
+            </div>
+            <div class="counter-box">
+              <div class="counter-label">Kanak-kanak</div>
+              <div class="counter-controls">
+                <button type="button" class="cnt-btn" onclick="updateCounter('kanak', -1)">-</button>
+                <input type="text" id="val-kanak" class="cnt-val" value="0" readonly>
+                <button type="button" class="cnt-btn" onclick="updateCounter('kanak', 1)">+</button>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-submit"><i class="fas fa-paper-plane" style="margin-right: 8px;"></i> HANTAR</button>
+        </form>
+      </div>
+
+      <div class="rsvp-body" id="rsvp-success">
+        <i class="far fa-check-circle"></i>
+        <h3>Terima Kasih!</h3>
+        <p style="font-size: 13px; color: #666;">Pengesahan kehadiran anda telah direkodkan.</p>
+        <button class="btn-outline" style="margin-top: 15px; width: 100%;" onclick="closeRsvpModal()">Tutup</button>
+      </div>
+
     </div>
   </div>
 
@@ -555,17 +464,10 @@
       document.getElementById('invitation-cover').classList.add('hide-cover');
       const playPromise = music.play();
       if (playPromise !== undefined) {
-        playPromise.then(() => {
-          viz.classList.add('playing');
-        }).catch(() => {
-          console.log("Autoplay blocked.");
-        });
+        playPromise.then(() => { viz.classList.add('playing'); })
+        .catch(() => { console.log("Autoplay blocked."); });
       }
       initPetals();
-    }
-
-    function scrollToContent() {
-      document.getElementById('main-content').scrollIntoView({ behavior: 'smooth' });
     }
 
     function toggleMusic() {
@@ -573,13 +475,79 @@
       else { music.pause(); viz.classList.remove('playing'); }
     }
 
-    function toggleInfo() {
-      const g = document.getElementById('info-content');
-      g.style.display = (g.style.display === 'block') ? 'none' : 'block';
-      if(g.style.display === 'block') g.scrollIntoView({ behavior: 'smooth' });
+    function setActiveNav(element) {
+      document.querySelectorAll('.nav-icon').forEach(nav => nav.classList.remove('active'));
+      element.classList.add('active');
     }
 
-    /* --- PETALS --- */
+    /* --- RSVP MODAL LOGIC WITH GOOGLE SHEETS API --- */
+    const modal = document.getElementById('rsvpModal');
+    
+    function openRsvpModal() { modal.classList.add('active'); }
+    
+    function closeRsvpModal() { 
+      modal.classList.remove('active'); 
+      setTimeout(() => {
+        document.getElementById('rsvp-form-container').style.display = 'block';
+        document.getElementById('rsvp-success').style.display = 'none';
+        document.getElementById('rsvpForm').reset();
+        document.getElementById('val-dewasa').value = '1';
+        document.getElementById('val-kanak').value = '0';
+      }, 300);
+    }
+
+    window.onclick = function(event) {
+      if (event.target == modal) closeRsvpModal();
+    }
+
+    function updateCounter(type, change) {
+      const input = document.getElementById(`val-${type}`);
+      let currentVal = parseInt(input.value);
+      let newVal = currentVal + change;
+      if (newVal < 0) newVal = 0;
+      if (type === 'dewasa' && newVal < 1) newVal = 1; 
+      input.value = newVal;
+    }
+
+    function submitRSVP(e) {
+      e.preventDefault();
+      
+      const submitBtn = document.querySelector('.btn-submit');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:8px;"></i> Menghantar...';
+      submitBtn.disabled = true;
+
+      const nama = document.getElementById('rsvp-nama').value;
+      const tel = document.getElementById('rsvp-tel').value;
+      const dewasa = document.getElementById('val-dewasa').value;
+      const kanak = document.getElementById('val-kanak').value;
+
+      // Your Google Apps Script Web App URL
+      const scriptUrl = 'https://script.google.com/macros/s/AKfycby4x9m4lb8-xFWpoYVNwImhlcFeoM_DtjM5BOjZPScirXeSpKRq5_tYcVGTQxccu8WcCg/exec';
+
+      fetch(scriptUrl, {
+        method: 'POST',
+        mode: 'no-cors', // Solves CORS blocks on mobile
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ nama, tel, dewasa, kanak })
+      })
+      .then(() => {
+        document.getElementById('rsvp-form-container').style.display = 'none';
+        document.getElementById('rsvp-success').style.display = 'block';
+      })
+      .catch(error => {
+        console.error('Error!', error.message);
+        alert('Maaf, pendaftaran gagal. Sila periksa talian internet anda dan cuba lagi.');
+      })
+      .finally(() => {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+      });
+    }
+
+    /* --- PETALS ANIMATION --- */
     const canvas = document.getElementById('petals-canvas');
     const ctx = canvas.getContext('2d');
     let petalArray = [];
@@ -590,12 +558,10 @@
       petalArray = [];
       for (let i = 0; i < 25; i++) {
         petalArray.push({
-          x: Math.random() * canvas.width, 
-          y: Math.random() * canvas.height,
-          size: Math.random() * 4 + 2, 
-          speed: Math.random() * 0.8 + 0.5,
-          swing: Math.random() * 2, 
-          opacity: Math.random() * 0.3 + 0.2
+          x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+          size: Math.random() * 5 + 3, speed: Math.random() * 1 + 0.5,
+          swing: Math.random() * Math.PI * 2, swingSpeed: Math.random() * 0.03 + 0.01,
+          opacity: Math.random() * 0.4 + 0.2, rotation: Math.random() * 360
         });
       }
       animate();
@@ -604,60 +570,86 @@
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       petalArray.forEach(p => {
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rotation * Math.PI / 180);
         ctx.beginPath(); 
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.ellipse(0, 0, p.size, p.size * 1.6, 0, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(212, 163, 163, ${p.opacity})`;
         ctx.fill();
+        ctx.restore();
+
         p.y += p.speed; 
-        p.x += Math.sin(p.swing) * 0.5;
-        if (p.y > canvas.height) p.y = -10;
+        p.swing += p.swingSpeed;
+        p.x += Math.sin(p.swing) * 0.8;
+        p.rotation += p.speed;
+
+        if (p.y > canvas.height + 20) {
+            p.y = -20; p.x = Math.random() * canvas.width;
+        }
       });
       requestAnimationFrame(animate);
     }
 
     /* --- TIMER --- */
     const targetDate = new Date("Aug 22, 2026 11:00:00").getTime();
-    setInterval(() => {
-      const now = new Date().getTime();
-      const diff = targetDate - now;
-      if (diff > 0) {
-        document.getElementById('days').innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
-        document.getElementById('hours').innerText = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
-        document.getElementById('mins').innerText = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
-        document.getElementById('secs').innerText = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
-      }
-    }, 1000);
+    function updateTimer() {
+        const now = new Date().getTime();
+        const diff = targetDate - now;
+        if (diff > 0) {
+            document.getElementById('days').innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+            document.getElementById('hours').innerText = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+            document.getElementById('mins').innerText = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+            document.getElementById('secs').innerText = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
+        }
+    }
+    updateTimer(); 
+    setInterval(updateTimer, 1000);
 
-    /* --- REVEAL ANIMATION --- */
+    /* --- SCROLL REVEAL & PARALLAX --- */
     const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+      entries.forEach(entry => { 
+          if (entry.isIntersecting) { entry.target.classList.add('active'); observer.unobserve(entry.target); }
+      });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    /* --- UPDATED PERSISTENT PARALLAX (BLUR & TRANSPARENT ONLY) --- */
-    window.onscroll = function() {
-      const topFlower = document.getElementById('top-flowers');
-      const leftBorder = document.getElementById('left-border');
-      const rightBorder = document.getElementById('right-border');
-      
-      const scrollPosition = window.scrollY;
-      
-      const currentBlur = Math.min((scrollPosition / 500) * 8, 8);
-      const currentOpacity = Math.max(1 - (scrollPosition / 600), 0.8);
+    let ticking = false;
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        window.requestAnimationFrame(function() {
+          const scrollPos = window.scrollY;
+          const currentBlur = Math.min((scrollPos / 400) * 8, 8);
+          const currentOpacity = Math.max(1 - (scrollPos / 700), 0.7);
 
-      const decorations = [topFlower, leftBorder, rightBorder];
-      
-      decorations.forEach(el => {
-        if(el) {
-          el.style.filter = `blur(${currentBlur}px)`;
-          el.style.opacity = currentOpacity;
-        }
-      });
-    };
+          const decorations = [ document.getElementById('top-flowers'), document.getElementById('left-border'), document.getElementById('right-border') ];
+          decorations.forEach(el => {
+            if(el) { el.style.filter = `blur(${currentBlur}px)`; el.style.opacity = currentOpacity; }
+          });
+          
+          const sections = document.querySelectorAll('.section-container');
+          sections.forEach(sec => {
+            const top = window.scrollY;
+            const offset = sec.offsetTop - 150;
+            const height = sec.offsetHeight;
+            const id = sec.getAttribute('id');
+            if(top >= offset && top < offset + height) {
+              document.querySelectorAll('.bottom-nav a').forEach(links => {
+                links.classList.remove('active');
+                if(document.querySelector('.bottom-nav a[href*=' + id + ']')) {
+                    document.querySelector('.bottom-nav a[href*=' + id + ']').classList.add('active');
+                }
+              });
+            }
+          });
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
 
     window.onresize = () => { 
-        canvas.width = window.innerWidth; 
-        canvas.height = window.innerHeight; 
+        if(canvas.width > 0) { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
     };
   </script>
 </body>
