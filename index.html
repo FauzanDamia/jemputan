@@ -69,7 +69,8 @@
     }
 
     /* --- BACKGROUND & DECORATIONS --- */
-    #petals-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
+    /* z-index 25 to fall in front of hero (z-index:20) but behind other cards (z-index:30) */
+    #petals-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 25; }
 
     .flower-header, .side-border {
       position: fixed; z-index: 1; pointer-events: none;
@@ -133,9 +134,10 @@
       box-shadow: 0 10px 35px rgba(15, 61, 66, 0.03);
     }
 
+    /* z-index 30 so petals falling behind this section */
     .section-container {
       max-width: 600px; margin: 0 auto;
-      padding: 50px 30px; position: relative; z-index: 20;
+      padding: 50px 30px; position: relative; z-index: 30;
       border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.8);
       text-align: center; margin-top: 20px; box-shadow: var(--shadow-soft);
     }
@@ -144,16 +146,28 @@
       background: #ffffff;
     }
 
-    .hero-names h1 { font-family: 'Playfair Display', serif; font-size: clamp(45px, 11vw, 80px); color: var(--teal-dark); margin: 10px 0; font-weight: 400; line-height: 1.1; }
-    .date-block { display: inline-flex; flex-direction: column; align-items: center; margin: 25px 0; padding: 20px 45px; border: 1px solid rgba(24, 83, 89, 0.15); background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); border-radius: 8px; }
+    /* Increased hero font size */
+    .hero-names h1 { font-family: 'Playfair Display', serif; font-size: clamp(55px, 14vw, 100px); color: var(--teal-dark); margin: 10px 0; font-weight: 400; line-height: 1.1; }
+    .date-block { display: inline-flex; flex-direction: column; align-items: center; margin: 15px 0 5px 0; padding: 20px 45px; border: 1px solid rgba(24, 83, 89, 0.15); background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); border-radius: 8px; }
     .date-month { text-transform: uppercase; letter-spacing: 5px; font-size: 13px; color: var(--teal-main); font-weight: 500;}
-    .date-day { font-family: 'Playfair Display', serif; font-size: 55px; line-height: 1; margin: 10px 0; color: var(--teal-main); }
+    /* Removed margin to make it compact */
+    .date-day { font-family: 'Playfair Display', serif; font-size: 55px; line-height: 1; margin: 0; color: var(--teal-main); }
     .date-year { letter-spacing: 3px; font-weight: 400; font-size: 13px; color: #555;}
     
-    #timer { display: flex; justify-content: center; gap: 20px; margin: 25px 0; }
+    #timer { display: flex; justify-content: center; gap: 20px; margin: 15px 0 25px; }
     .time-node { display: flex; flex-direction: column; align-items: center; }
     .time-node span { font-size: 28px; font-family: 'Playfair Display', serif; color: var(--teal-main); line-height: 1; }
     .time-node label { font-size: 9px; text-transform: uppercase; color: #778899; letter-spacing: 2px; margin-top: 5px; }
+
+    /* Scroll Hint Animation */
+    .scroll-hint { margin-top: 20px; animation: bounceHint 2s infinite; color: var(--teal-main); }
+    .scroll-hint p { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; font-weight: 600; }
+    .scroll-hint i { font-size: 14px; }
+    @keyframes bounceHint { 
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 
+      40% { transform: translateY(-8px); } 
+      60% { transform: translateY(-4px); } 
+    }
 
     .divider { height: 1px; width: 80px; background: var(--gold); margin: 30px auto; opacity: 0.6; }
 
@@ -333,6 +347,14 @@
             <div class="date-day">22</div>
             <div class="date-year">2026</div>
           </div>
+          
+          <!-- Venue under date added here -->
+          <p style="font-size: 13px; font-weight: 600; color: var(--teal-main); margin-top: 5px; margin-bottom: 15px; letter-spacing: 1px;">
+            RITZ GARDEN HOTEL, SERI MANJUNG
+          </p>
+
+          <!-- Countdown Label added here -->
+          <p style="text-transform: uppercase; font-size: 11px; letter-spacing: 3px; color: var(--teal-main); font-weight: 600; margin-top: 30px; margin-bottom: -10px;">Countdown</p>
 
           <div id="timer">
             <div class="time-node"><span id="days">00</span><label>Hari</label></div>
@@ -340,6 +362,13 @@
             <div class="time-node"><span id="mins">00</span><label>Minit</label></div>
             <div class="time-node"><span id="secs">00</span><label>Saat</label></div>
           </div>
+          
+          <!-- Scroll Hint added here -->
+          <div class="scroll-hint">
+            <p>Skrol ke bawah</p>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          
         </div>
       </div>
 
@@ -391,6 +420,9 @@
       <i class="far fa-calendar-alt" style="font-size: 30px; color: var(--gold); margin-bottom: 10px;"></i>
       <p style="text-transform: uppercase; letter-spacing: 3px; font-size: 12px; font-weight: 600; color: var(--teal-main);">Aturcara Majlis</p>
       
+      <!-- Added Date Reminder here -->
+      <p style="font-size: 14px; font-weight: 600; color: var(--dark); margin-top: 5px; margin-bottom: 20px;">Sabtu, 22 Ogos 2026</p>
+      
       <div class="timeline">
         <div class="timeline-item">
           <span class="timeline-time">11:00 AM</span>
@@ -409,12 +441,17 @@
       <div class="divider"></div>
 
       <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 12px; font-weight: 600; color: var(--teal-main); margin-bottom: 15px;">Tema Pakaian</p>
+      
+      <!-- Updated Colors here -->
       <div style="display: flex; justify-content: center; margin-bottom: 10px;">
-        <div class="color-circle" style="background: var(--teal-dark);" title="Deep Teal"></div>
-        <div class="color-circle" style="background: var(--teal-accent);" title="Teal Blue"></div>
-        <div class="color-circle" style="background: var(--gold);" title="Champagne Gold"></div>
+        <div class="color-circle" style="background: #D3D3D3;" title="Light Grey"></div>
+        <div class="color-circle" style="background: #36454F;" title="Charcoal"></div>
+        <div class="color-circle" style="background: #B38B6D;" title="Taupe"></div>
+        <div class="color-circle" style="background: #FFFFF0;" title="Ivory"></div>
       </div>
-      <p style="font-size: 12px; color: #888; font-style: italic;">Sopan & Bersesuaian</p>
+      
+      <!-- Updated Wording here -->
+      <p style="font-size: 12px; color: #888; font-style: italic;">atau Pakaian yang Sopan dan Bersesuaian</p>
 
       <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Wedding+Damia+%26+Fauzan&dates=20260822T030000Z/20260822T080000Z&location=Grand+Ballroom,+Ritz+Garden+Hotel,+Seri+Manjung&details=Majlis+Walimatulurus+Damia+dan+Fauzan" class="btn-outline" style="margin-top: 20px;" target="_blank"><i class="fas fa-calendar-plus"></i> Simpan Tarikh</a>
     </section>
@@ -424,7 +461,10 @@
       <p style="text-transform: uppercase; letter-spacing: 3px; font-size: 12px; font-weight: 600; color: var(--teal-main);">Hubungi Kami</p>
       
       <p style="font-size: 13px; color: #666; margin-bottom: 20px;">Sekiranya terdapat sebarang pertanyaan:</p>
-      <a href="https://wa.me/601111875246" class="btn-outline"><i class="fab fa-whatsapp"></i> WhatsApp Keluarga</a>
+      
+      <!-- Changed Hubungi Kami Cards here -->
+      <a href="https://wa.me/601111875246" class="btn-outline" style="width: 100%; max-width: 250px; margin-bottom: 10px;"><i class="fab fa-whatsapp"></i> Whatsapp Shima<br>(011-11875246)</a><br>
+      <a href="https://wa.me/60175147412" class="btn-outline" style="width: 100%; max-width: 250px;"><i class="fab fa-whatsapp"></i> Whatsapp Khiruddin<br>(017-5147412)</a>
 
       <p style="margin-top: 50px; font-family: 'Playfair Display', serif; font-size: 15px; color: #999; font-style: italic; line-height: 1.8;">
         "Dan kami jadikan kamu berpasang-pasangan"<br>
@@ -434,7 +474,8 @@
   </main>
 
   <nav class="bottom-nav">
-    <a href="#kenalan" class="nav-icon" onclick="setActiveNav(this)"><i class="fas fa-phone"></i>KENALAN</a>
+    <!-- Changed KENALAN to HUBUNGI here -->
+    <a href="#kenalan" class="nav-icon" onclick="setActiveNav(this)"><i class="fas fa-phone"></i>HUBUNGI</a>
     <a href="#lokasi" class="nav-icon" onclick="setActiveNav(this)"><i class="fas fa-map-marked-alt"></i>LOKASI</a>
     <a href="#utama" class="nav-icon nav-home active" onclick="setActiveNav(this)"><i class="fas fa-home"></i>UTAMA</a>
     <a href="#kalendar" class="nav-icon" onclick="setActiveNav(this)"><i class="far fa-calendar-alt"></i>KALENDAR</a>
